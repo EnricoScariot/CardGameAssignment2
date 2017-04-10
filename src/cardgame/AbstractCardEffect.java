@@ -9,6 +9,8 @@ package cardgame;
  *
  * @author atorsell
  */
+
+// ciao
 public abstract class AbstractCardEffect extends AbstractEffect {
     protected Player owner;
     protected Card card;
