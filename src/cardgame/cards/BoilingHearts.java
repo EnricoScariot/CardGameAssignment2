@@ -6,28 +6,37 @@
 package cardgame.cards;
 import cardgame.AbstractWitchcraft;
 import cardgame.AbstractWitchcraftCardEffect;
+import cardgame.BoilingHeartsDecorator;
 import cardgame.Card;
+import cardgame.Creature;
 import cardgame.Effect;
-import cardgame.Enchantment;
 import cardgame.Player;
 import cardgame.Witchcraft;
-import java.util.List;
-
+import cardgame.CardGame;
 /**
  *
  * @author Sara
  */
 public class BoilingHearts implements Card {
-    
-    /*DA FINIRE, MANCA PRATICAMENTE TUTTO*/
 
     private class BoilingHeartsEffect extends AbstractWitchcraftCardEffect {
-        public BoilingHeartsEffect(Player p, Card c) { super(p,c); }
+        public BoilingHeartsEffect(Player p,Card c) { super(p,c); }
+        
+        @Override
+        public void resolve(){
+             for (Creature c : owner.getCreatures()) {
+                /*aggiungo il decoratore a ogni creature del giocatore*/
+                c = new BoilingHeartsDecorator(c);
+            }
+            for (Creature c : CardGame.instance.getCurrentAdversary().getCreatures()) {
+                /*aggiungo il decoratore a ogni creature dell'avversario*/
+                c = new BoilingHeartsDecorator(c);
+            }
+        }
         @Override
         protected Witchcraft createWitchcraft() { return new BoilingHeartsWitchcraft(owner); }
-
     }
-
+    
     @Override
     public Effect getEffect(Player p) { return new BoilingHeartsEffect(p,this); }
     
@@ -38,5 +47,15 @@ public class BoilingHearts implements Card {
     @Override
     public String name() { return "Boiling Hearts"; }
     }
+    @Override
+    public String name() { return "Boiling Hearts";}
+    @Override
+    public String type() {return "Witchcraft";}
+    @Override
+    public String ruleText() {return "Boiling Hearts deals 1 damage to each creature";}
+    @Override
+    public boolean isInstant() {return false;}
+    @Override
+    public String toString() { return name() + " (" + type() + ") [" + ruleText() +"]";}
     
 }

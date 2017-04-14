@@ -5,10 +5,7 @@
  */
 package cardgame;
 
-import java.util.List;
-
-/**
- *
+ /*
  * @author Sara
  */
 public class BoilingHeartsDecorator extends CreatureDecorator{
@@ -17,10 +14,10 @@ public class BoilingHeartsDecorator extends CreatureDecorator{
     public BoilingHeartsDecorator(Creature creatura){
         super(creatura);
         }
-    @Override 
-    public void operation(){
-        /*infligge un danno alle creature*/
-        }  
-
+    @Override
+    public void inflictDamage(int dmg) {
+        creaturaDecorata.inflictDamage(1);
+    }
+  
 
 }

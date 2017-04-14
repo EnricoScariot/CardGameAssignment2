@@ -9,7 +9,7 @@ package cardgame;
  *
  * @author Sara
  */
-public class AbstractWitchcraft implements Witchcraft{
+public abstract class AbstractWitchcraft implements Witchcraft{
     protected Player owner;        
     protected AbstractWitchcraft(Player owner) { this.owner=owner; }
         

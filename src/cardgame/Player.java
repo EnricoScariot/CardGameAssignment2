@@ -126,11 +126,6 @@ public class Player {
     Phases currentPhaseId() { return phaseManagerStack.peek().currentPhase(); }
     Phase nextPhase() { return getPhase(phaseManagerStack.peek().nextPhase()); }
  
-    
-    
-    
-    
-    
      // hand management
     private final ArrayList<Card> hand = new ArrayList<>();
     private int maxHandSize=7;
@@ -178,7 +173,5 @@ public class Player {
     public List<Witchcraft> getWitchcraft() {return witchcraft;}
     // destroy a creature in play
     public void destroy(Witchcraft w) {witchcraft.remove(w);}
-    
-    
-    //AGGIUNGERE MANAGEMENT DI ISTANTANEI?
+
 }

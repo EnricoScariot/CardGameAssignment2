@@ -17,7 +17,7 @@ public abstract class AbstractWitchcraftCardEffect extends AbstractCardEffect {
     
     @Override
     public void resolve() {
-        Witchcraft w=createWitchcraft();/*da implementare nelle carte stregoneria con una classe astratta*/
+        Witchcraft w=createWitchcraft();
         owner.getWitchcraft().add(w);
         w.insert();
     }
