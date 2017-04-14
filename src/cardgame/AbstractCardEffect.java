@@ -10,7 +10,6 @@ package cardgame;
  * @author atorsell
  */
 
-// ciao
 public abstract class AbstractCardEffect extends AbstractEffect {
     protected Player owner;
     protected Card card;
@@ -21,7 +20,7 @@ public abstract class AbstractCardEffect extends AbstractEffect {
         owner.getHand().remove(card);
         return super.play();
     }
-    
+    @Override
     public String toString() { return card.toString(); }
-    //public
+  
 }

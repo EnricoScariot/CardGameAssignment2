@@ -171,4 +171,14 @@ public class Player {
     public List<Enchantment> getEnchantments() {return enchantments;}
     // destroy a creature in play
     public void destroy(Enchantment c) {enchantments.remove(c);} 
+    
+    
+    //witchcraft management
+    private final ArrayList<Witchcraft> witchcraft = new ArrayList<>();
+    public List<Witchcraft> getWitchcraft() {return witchcraft;}
+    // destroy a creature in play
+    public void destroy(Witchcraft w) {witchcraft.remove(w);}
+    
+    
+    //AGGIUNGERE MANAGEMENT DI ISTANTANEI?
 }
