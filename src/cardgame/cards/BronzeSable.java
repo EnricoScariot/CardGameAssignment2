@@ -58,7 +58,7 @@ public class BronzeSable implements Card {
     
     
     @Override
-    public String name() { return "NorwoodRanger"; }
+    public String name() { return "Bronze Sable"; }
     @Override
     public String type() { return "Creature"; }
     @Override
