@@ -40,6 +40,8 @@ public abstract class AbstractCreature implements Creature {
             isTapped=false; 
             return true; 
         }
+    @Override   
+    public int getDamage() { return this.getToughness()-this.damageLeft; }
         
     @Override
         public boolean isTapped() { return isTapped; }

@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author atorsell
  */
-public interface Creature extends Permanent {
+public interface Creature extends Permanent{
     
     boolean tap();
     boolean untap();
@@ -22,6 +22,7 @@ public interface Creature extends Permanent {
     void resetDamage();
     int getPower();
     int getToughness();
+    int getDamage();
     
     // returns all the effects associated to this creature
     List<Effect> effects();

@@ -6,7 +6,6 @@
 package cardgame.cards;
 import cardgame.AbstractWitchcraft;
 import cardgame.AbstractWitchcraftCardEffect;
-import cardgame.BoilingHeartsDecorator;
 import cardgame.Card;
 import cardgame.Creature;
 import cardgame.Effect;
@@ -25,12 +24,12 @@ public class BoilingHearts implements Card {
         @Override
         public void resolve(){
              for (Creature c : owner.getCreatures()) {
-                /*aggiungo il decoratore a ogni creature del giocatore*/
-                c = new BoilingHeartsDecorator(c);
+                /*infliggi il danno a ogni creatura del giocatore*/
+                c.inflictDamage(1);
             }
             for (Creature c : CardGame.instance.getCurrentAdversary().getCreatures()) {
-                /*aggiungo il decoratore a ogni creature dell'avversario*/
-                c = new BoilingHeartsDecorator(c);
+                /*infliggi il danno a ogni creatura dell'avversario*/
+                c.inflictDamage(1);
             }
         }
         @Override

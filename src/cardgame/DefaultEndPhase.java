@@ -26,5 +26,7 @@ public class DefaultEndPhase implements Phase {
             System.out.println("...reset damage to adversary creature " + c.name());
             c.resetDamage();
         }
+        
+        /*aggiungere metodo che toglie i decoratori delle stregoneie*/
     }
 }

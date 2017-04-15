@@ -9,7 +9,7 @@ package cardgame;
  *
  * @author Sara
  */
-public interface NotPermanent {
+public interface NotPermanent{
     String name();
     void insert();
     void remove();

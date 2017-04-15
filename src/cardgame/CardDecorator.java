@@ -10,13 +10,12 @@ package cardgame;
  * @author Sara
  */
 /*
-public abstract class CreatureDecorator extends CardDecorator{
-    Creature decorate;
-    
-    public CreatureDecorator(Card decoratedCard) {
-        super(decoratedCard);
-    }
-    
+public abstract class CardDecorator implements Card{
+    protected Card decoratedCard;
+
+    public CardDecorator(Card decoratedCard) {
+        this.decoratedCard = decoratedCard;
+    }   
     
 }
 */
