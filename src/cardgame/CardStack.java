@@ -25,10 +25,8 @@ public class CardStack implements Iterable<Effect> {
     
     public void resolve() {
         while(!stack.isEmpty()) { 
-            Effect e = stack.pop();
-            
-            System.out.println("Stack: resolving " + e);
-            
+            Effect e = stack.pop();       
+            System.out.println("Stack: resolving " + e);         
             e.resolve(); 
         }
     }

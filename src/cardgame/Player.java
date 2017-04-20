@@ -12,8 +12,6 @@ import java.util.Deque;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Scanner;
-
-
 /**
  *
  * @author atorsell
@@ -31,8 +29,6 @@ public class Player {
     public void setDeck(Iterator<Card> deck) { library.add(deck); }
     public Library getDeck() { return library; }
     
-    
-    
     private int life=10;
     public int getLife() {return life;}
     
@@ -42,13 +38,10 @@ public class Player {
         if (life <=0) lose("received fatal damage");
     }
     
-    public void heal(int pts) { life += pts; }
-            
+    public void heal(int pts) { life += pts; }          
             
     // player looses. might need strategy/decorator
     public void lose(String s) { throw new EndOfGame(name + " lost the game: "+ s); }     
-    
-    
     
     public Player() {
         phaseManagerStack.push(new DefaultPhaseManager(phases));
@@ -69,9 +62,7 @@ public class Player {
         setPhase(Phases.END, new DefaultEndPhase());
         
         phases.put(Phases.NULL, new ArrayDeque<Phase>());
-    }
-    
-    
+    }    
     
     void executeTurn() {
         System.out.println(name() + "'s turn");
@@ -103,10 +94,7 @@ public class Player {
         while ((curPhase=nextPhase())!=null) {
             curPhase.execute();
         }
-    }
-    
-    
-    
+    }  
     
     // phase management
     
@@ -151,27 +139,23 @@ public class Player {
         if (idx>=0 && idx<hand.size())
             hand.remove(idx);         
     }
-    
-    
+     
     // Creature management
     private final ArrayList<Creature> creatures = new ArrayList<>();
     public List<Creature> getCreatures() {return creatures;}
     // destroy a creature in play
-    public void destroy(Creature c) {creatures.remove(c);} 
-    
-    
+    public void destroy(Creature c) {creatures.remove(c);}    
     
     // Enchantments management
     private final ArrayList<Enchantment> enchantments = new ArrayList<>();
     public List<Enchantment> getEnchantments() {return enchantments;}
     // destroy a creature in play
     public void destroy(Enchantment c) {enchantments.remove(c);} 
-    
-    
+       
     //witchcraft management
-    private final ArrayList<Witchcraft> witchcraft = new ArrayList<>();
-    public List<Witchcraft> getWitchcraft() {return witchcraft;}
-    // destroy a creature in play
-    public void destroy(Witchcraft w) {witchcraft.remove(w);}
+    private final ArrayList<Witchcraft> witchcrafts = new ArrayList<>();
+    public List<Witchcraft> getWitchcraft() {return witchcrafts;}
+    // destroy a witchcraft in play
+    public void destroy(Witchcraft w) {witchcrafts.remove(w);}
 
 }

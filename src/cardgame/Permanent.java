@@ -9,7 +9,7 @@ package cardgame;
  *
  * @author atorsell
  */
-public interface Permanent {
+public interface Permanent{
     String name();
     void insert();
     void remove();    

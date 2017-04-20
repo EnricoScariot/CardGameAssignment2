@@ -18,7 +18,7 @@ public abstract class AbstractEnchantmentCardEffect extends AbstractCardEffect {
     @Override
     public void resolve() {
         Enchantment e=createEnchantment();
-        owner.getEnchantments().add(e);
+        owner.getEnchantments().add(e);//inserisce l'incantesimo nell'elenco degli incantesimi nel campo
         e.insert();
     }
 }
