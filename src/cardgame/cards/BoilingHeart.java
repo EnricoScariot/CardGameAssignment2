@@ -16,38 +16,41 @@ import cardgame.CardGame;
  *
  * @author Sara
  */
-public class BoilingHearts implements Card {
+/*NON FUNZIONA*/
+public class BoilingHeart implements Card {
 
-    private class BoilingHeartsEffect extends AbstractWitchcraftCardEffect {
-        public BoilingHeartsEffect(Player p,Card c) { super(p,c); }
+    private class BoilingHeartEffect extends AbstractWitchcraftCardEffect {
+        public BoilingHeartEffect(Player p,Card c) { super(p,c); }
         
         @Override
         public void resolve(){
-             for (Creature c : owner.getCreatures()) {
+            
+            for (Creature c : owner.getCreatures()) {
                 /*infliggi il danno a ogni creatura del giocatore*/
                 c.inflictDamage(1);
+                System.out.println("danni al giocatore fatti");
             }
             for (Creature c : CardGame.instance.getCurrentAdversary().getCreatures()) {
                 /*infliggi il danno a ogni creatura dell'avversario*/
                 c.inflictDamage(1);
+                System.out.println("danni all'avversario fatti");
             }
         }
         @Override
-        protected Witchcraft createWitchcraft() { return new BoilingHeartsWitchcraft(owner); }
+        protected Witchcraft createWitchcraft() { return new BoilingHeartWitchcraft(owner); }
     }
-    
     @Override
-    public Effect getEffect(Player p) { return new BoilingHeartsEffect(p,this); }
+    public Effect getEffect(Player p) { return new BoilingHeartEffect(p,this); }
     
-    private class BoilingHeartsWitchcraft extends AbstractWitchcraft {
-        public BoilingHeartsWitchcraft(Player owner) {
+    private class BoilingHeartWitchcraft extends AbstractWitchcraft {
+        public BoilingHeartWitchcraft(Player owner) {
             super(owner);
         }
     @Override
-    public String name() { return "Boiling Hearts"; }
+    public String name() { return "Boiling Heart"; }
     }
     @Override
-    public String name() { return "Boiling Hearts";}
+    public String name() { return "Boiling Heart";}
     @Override
     public String type() {return "Witchcraft";}
     @Override
