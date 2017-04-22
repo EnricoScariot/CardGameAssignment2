@@ -8,10 +8,13 @@ package cardgame.cards;
 import cardgame.AbstractWitchcraft;
 import cardgame.AbstractWitchcraftCardEffect;
 import cardgame.Card;
+import cardgame.CardFactory;
+import cardgame.CardFactory.StaticInitializer;
 import cardgame.Creature;
 import cardgame.Effect;
 import cardgame.Player;
 import cardgame.CardGame;
+import cardgame.ICardFactory;
 import cardgame.Witchcraft;
 import java.util.LinkedList;
 
@@ -20,8 +23,14 @@ import java.util.LinkedList;
  * @author Sara
  */
 
-/*NON FUNZIONA*/
 public class DayOfJudgment implements Card{
+    
+   private class Factory implements ICardFactory {
+        @Override
+        public Card create() { return new DayOfJudgment(); }
+    }
+        
+    private StaticInitializer initializer = new StaticInitializer("Day of Judgment",new Factory());
     
      private class DayOfJudgmentEffect extends AbstractWitchcraftCardEffect {
         public DayOfJudgmentEffect(Player p,Card c) { super(p,c); }

@@ -21,7 +21,7 @@ import cardgame.cards.Fatigue;
 import cardgame.cards.NorwoodRanger;
 import cardgame.cards.SavorTheMoment;
 import cardgame.cards.WorldAtWar;
-
+import cardgame.CardFactory;
 /**
  *
  * @author atorsell
@@ -32,6 +32,13 @@ public class CardGame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        /*per debug*/
+        for (String s: CardFactory.getMapCards()) {
+                System.out.println(s);
+                System.out.println("non hai carte");
+        }
+        
         //create decks
         ArrayList<Card> deck = new ArrayList<>();
     //    for (int i=0; i!=3; ++i) deck.add(new Homeopathy());
@@ -48,9 +55,9 @@ public class CardGame {
         
         instance.getPlayer(0).setDeck(deck.iterator());
         instance.getPlayer(1).setDeck(deck.iterator());
-        
+       
         instance.run();
-    }
+    }  
     
     //Signleton and instance access
     public static final CardGame instance = new CardGame();

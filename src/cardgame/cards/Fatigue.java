@@ -8,8 +8,11 @@ package cardgame.cards;
 import cardgame.AbstractWitchcraft;
 import cardgame.AbstractWitchcraftCardEffect;
 import cardgame.Card;
+import cardgame.CardFactory;
+import cardgame.CardFactory.StaticInitializer;
 import cardgame.CardGame;
 import cardgame.Effect;
+import cardgame.ICardFactory;
 import cardgame.Phases;
 import cardgame.Player;
 import cardgame.SkipPhase;
@@ -21,6 +24,13 @@ import java.util.Scanner;
  * @author Sara
  */
 public class Fatigue implements Card{
+    
+   private class Factory implements ICardFactory {
+        @Override
+        public Card create() { return new Fatigue(); }
+    }
+        
+    private StaticInitializer initializer = new StaticInitializer("Fatigue",new Factory());
       
     private class FatigueEffect extends AbstractWitchcraftCardEffect {
         public FatigueEffect(Player p,Card c) { super(p,c); }

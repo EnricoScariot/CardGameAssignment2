@@ -16,4 +16,5 @@ public interface Card {
     String type(); //sorcery, instant, or creature
     String ruleText();
     boolean isInstant();
+ 
 }

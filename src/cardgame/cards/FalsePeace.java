@@ -8,8 +8,11 @@ package cardgame.cards;
 import cardgame.AbstractWitchcraft;
 import cardgame.AbstractWitchcraftCardEffect;
 import cardgame.Card;
+import cardgame.CardFactory;
+import cardgame.CardFactory.StaticInitializer;
 import cardgame.CardGame;
 import cardgame.Effect;
+import cardgame.ICardFactory;
 import cardgame.Phases;
 import cardgame.Player;
 import cardgame.SkipPhase;
@@ -21,6 +24,13 @@ import java.util.Scanner;
  * @author Sara
  */
 public class FalsePeace implements Card{
+    
+  private class Factory implements ICardFactory {
+        @Override
+        public Card create() { return new FalsePeace(); }
+    }
+        
+    private StaticInitializer initializer = new StaticInitializer("False Peace",new Factory());
           
     private class FalsePeaceEffect extends AbstractWitchcraftCardEffect {
         public FalsePeaceEffect(Player p,Card c) { super(p,c); }

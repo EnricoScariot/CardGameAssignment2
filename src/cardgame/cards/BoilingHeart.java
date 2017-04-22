@@ -7,18 +7,28 @@ package cardgame.cards;
 import cardgame.AbstractWitchcraft;
 import cardgame.AbstractWitchcraftCardEffect;
 import cardgame.Card;
+import cardgame.CardFactory;
+import cardgame.CardFactory.StaticInitializer;
 import cardgame.Creature;
 import cardgame.Effect;
 import cardgame.Player;
 import cardgame.Witchcraft;
 import cardgame.CardGame;
+import cardgame.ICardFactory;
 import java.util.LinkedList;
 /**
  *
  * @author Sara
  */
-/*NON FUNZIONA*/
+
 public class BoilingHeart implements Card {
+    
+   private class Factory implements ICardFactory {
+        @Override
+        public Card create() { return new BoilingHeart(); }
+    }
+        
+    private StaticInitializer initializer = new StaticInitializer("Boiling Heart",new Factory());
 
     private class BoilingHeartEffect extends AbstractWitchcraftCardEffect {
         public BoilingHeartEffect(Player p,Card c) { super(p,c); }

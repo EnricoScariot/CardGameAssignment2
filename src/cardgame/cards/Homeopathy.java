@@ -7,7 +7,10 @@ package cardgame.cards;
 
 import cardgame.AbstractCardEffect;
 import cardgame.Card;
+import cardgame.CardFactory;
+import cardgame.CardFactory.StaticInitializer;
 import cardgame.Effect;
+import cardgame.ICardFactory;
 import cardgame.Player;
 
 /**
@@ -15,6 +18,14 @@ import cardgame.Player;
  * @author atorsell
  */
 public class Homeopathy implements Card {
+    
+    
+    private class Factory implements ICardFactory {
+        @Override
+        public Card create() { return new Homeopathy(); }
+    }
+        
+    private StaticInitializer initializer = new StaticInitializer("Homeopathy",new Factory());
     
     private class HomeopathyEffect extends AbstractCardEffect {
         public HomeopathyEffect(Player p, Card c) { super(p,c); }

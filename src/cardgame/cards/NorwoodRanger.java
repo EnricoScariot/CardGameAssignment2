@@ -7,9 +7,12 @@ package cardgame.cards;
 import cardgame.AbstractCreature;
 import cardgame.AbstractCreatureCardEffect;
 import cardgame.Card;
+import cardgame.CardFactory;
+import cardgame.CardFactory.StaticInitializer;
 import cardgame.CardGame;
 import cardgame.Creature;
 import cardgame.Effect;
+import cardgame.ICardFactory;
 import cardgame.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,13 @@ import java.util.List;
  * @author skari
  */
 public class NorwoodRanger implements Card {
+    
+ private class Factory implements ICardFactory {
+        @Override
+        public Card create() { return new NorwoodRanger(); }
+    }
+        
+    private StaticInitializer initializer = new StaticInitializer("Norwood Ranger",new Factory());
     
  private class NorwoodRangerEffect extends AbstractCreatureCardEffect {
         public NorwoodRangerEffect(Player p, Card c) { super(p,c); }

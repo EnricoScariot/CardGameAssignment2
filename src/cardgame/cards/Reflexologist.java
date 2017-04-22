@@ -8,9 +8,12 @@ package cardgame.cards;
 import cardgame.AbstractCreature;
 import cardgame.AbstractCreatureCardEffect;
 import cardgame.Card;
+import cardgame.CardFactory;
+import cardgame.CardFactory.StaticInitializer;
 import cardgame.CardGame;
 import cardgame.Creature;
 import cardgame.Effect;
+import cardgame.ICardFactory;
 import cardgame.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,15 @@ import java.util.List;
  * @author atorsell
  */
 public class Reflexologist implements Card {
+    
+    private class Factory implements ICardFactory {
+        @Override
+        public Card create() { return new Reflexologist(); }
+    }
+        
+    private StaticInitializer initializer = new StaticInitializer("Reflexologist",new Factory());
+    
+    
     
     private class ReflexologistEffect extends AbstractCreatureCardEffect {
         public ReflexologistEffect(Player p, Card c) { super(p,c); }
