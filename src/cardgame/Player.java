@@ -111,8 +111,8 @@ public class Player {
     private final Deque<PhaseManager> phaseManagerStack = new ArrayDeque<>();
     public void setPhaseManager(PhaseManager m) { phaseManagerStack.push(m); }
     public void removePhaseManager(PhaseManager m) { phaseManagerStack.remove(m); }
-    Phases currentPhaseId() { return phaseManagerStack.peek().currentPhase(); }
-    Phase nextPhase() { return getPhase(phaseManagerStack.peek().nextPhase()); }
+    public Phases currentPhaseId() { return phaseManagerStack.peek().currentPhase(); }
+    public Phase nextPhase() { return getPhase(phaseManagerStack.peek().nextPhase()); }
  
      // hand management
     private final ArrayList<Card> hand = new ArrayList<>();

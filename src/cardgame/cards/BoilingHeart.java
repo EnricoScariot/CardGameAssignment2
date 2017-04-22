@@ -12,6 +12,7 @@ import cardgame.Effect;
 import cardgame.Player;
 import cardgame.Witchcraft;
 import cardgame.CardGame;
+import java.util.LinkedList;
 /**
  *
  * @author Sara
@@ -24,17 +25,15 @@ public class BoilingHeart implements Card {
         
         @Override
         public void resolve(){
+            LinkedList <Creature> creature = new LinkedList();
+            creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
+            creature.addAll(CardGame.instance.getCurrentAdversary().getCreatures()); 
             
-            for (Creature c : owner.getCreatures()) {
-                /*infliggi il danno a ogni creatura del giocatore*/
+            for (Creature c : creature) {
                 c.inflictDamage(1);
-                System.out.println("danni al giocatore fatti");
+                System.out.println("danno pari a 1 inflitto a:"+c.name());
             }
-            for (Creature c : CardGame.instance.getCurrentAdversary().getCreatures()) {
-                /*infliggi il danno a ogni creatura dell'avversario*/
-                c.inflictDamage(1);
-                System.out.println("danni all'avversario fatti");
-            }
+
         }
         @Override
         protected Witchcraft createWitchcraft() { return new BoilingHeartWitchcraft(owner); }

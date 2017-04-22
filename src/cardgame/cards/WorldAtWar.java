@@ -9,6 +9,7 @@ import cardgame.AbstractWitchcraft;
 import cardgame.AbstractWitchcraftCardEffect;
 import cardgame.Card;
 import cardgame.CardGame;
+import cardgame.Creature;
 import cardgame.Effect;
 import cardgame.PhaseManager;
 import cardgame.Phases;
@@ -29,6 +30,7 @@ public class WorldAtWar implements Card{
         
         @Override
         public void resolve(){ 
+            CardGame.instance.getCurrentPlayer().setPhaseManager(new DoubleCombatPhaseManager());
         }
         @Override
         protected Witchcraft createWitchcraft() { return new WorldAtWarWitchcraft(owner); }
@@ -46,21 +48,39 @@ public class WorldAtWar implements Card{
     }
   
     private class DoubleCombatPhaseManager implements PhaseManager{  
-
+        int id = 0;
         @Override
         public Phases currentPhase() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            Phases phase;        
+            switch(id){
+                case 0:phase = Phases.MAIN;break;
+                case 1:phase = Phases.COMBAT;break;
+                case 2:phase = Phases.MAIN;break;
+                default:CardGame.instance.getCurrentPlayer().removePhaseManager(this);
+                phase = CardGame.instance.getCurrentPlayer().currentPhaseId();
+            }
+            return phase;
         }
+       
 
         @Override
         public Phases nextPhase() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+            id = id + 1;
+            if(id > 2){
+                CardGame.instance.getCurrentPlayer().removePhaseManager(this);
+                System.out.println("DoubleCombatPhaseManager removed");
+                return CardGame.instance.getCurrentPlayer().currentPhaseId().next();/*prende la prossima fase nell'ordine normale*/
+            }
+            else if (id == 1){
+                System.out.println("Untapping creatures before new Combat Phase");
+                for(Creature c:CardGame.instance.getCurrentPlayer().getCreatures())
+                    c.untap();
+                    }
+                return currentPhase();
+            }
         
     }   
-       
-       
-       
+             
     @Override
     public String name() {return "WorldAtWar";}
     @Override

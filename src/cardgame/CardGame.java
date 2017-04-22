@@ -20,6 +20,7 @@ import cardgame.cards.FalsePeace;
 import cardgame.cards.Fatigue;
 import cardgame.cards.NorwoodRanger;
 import cardgame.cards.SavorTheMoment;
+import cardgame.cards.WorldAtWar;
 
 /**
  *
@@ -42,7 +43,8 @@ public class CardGame {
         for (int i=0; i!=2; ++i) deck.add(new DayOfJudgment());
         for (int i=0; i!=2; ++i) deck.add(new SavorTheMoment());
         for (int i=0; i!=2; ++i) deck.add(new Fatigue());
-        for (int i=0; i!=2; ++i) deck.add(new FalsePeace());
+    //    for (int i=0; i!=2; ++i) deck.add(new FalsePeace());
+    //    for (int i=0; i!=2; ++i) deck.add(new WorldAtWar());
         
         instance.getPlayer(0).setDeck(deck.iterator());
         instance.getPlayer(1).setDeck(deck.iterator());

@@ -13,6 +13,7 @@ import cardgame.Effect;
 import cardgame.Player;
 import cardgame.CardGame;
 import cardgame.Witchcraft;
+import java.util.LinkedList;
 
 /**
  *
@@ -26,16 +27,14 @@ public class DayOfJudgment implements Card{
         public DayOfJudgmentEffect(Player p,Card c) { super(p,c); }
         
         @Override
-        public void resolve(){    
-            
-            for (Creature c : owner.getCreatures()) {
-                c.remove();
-                System.out.println("carta distrutta"+c.name());
-            }
-            for (Creature c : CardGame.instance.getCurrentAdversary().getCreatures()) {
+        public void resolve(){   
+            LinkedList <Creature> creature = new LinkedList();
+            creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
+            creature.addAll(CardGame.instance.getCurrentAdversary().getCreatures());            
+            for (Creature c : creature) {
                 c.remove();
                 System.out.println("creatura distrutta:"+c.name());
-            }
+            }           
         }
         @Override
         protected Witchcraft createWitchcraft() { return new DayOfJudgmentWitchcraft(owner); }
