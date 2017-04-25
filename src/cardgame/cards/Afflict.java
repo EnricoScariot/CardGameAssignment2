@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 
 public class Afflict implements Card{ 
-    LinkedList<CreatureDecorator> decorate = new LinkedList();//lista di decoratori
+   
     Creature target; 
      //aggiungo il decoratore di default in testa alla lista di decoratori
     
@@ -26,7 +26,7 @@ public class Afflict implements Card{
         
     private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("CalmingVerse",new Factory());
       
-    private class AfflictEffect extends AbstractEnchantmentCardEffect {
+    private class AfflictEffect extends AbstractCardEffect {
         public AfflictEffect(Player p,Card c) { super(p,c); }
  
         public void getTarget(){
@@ -64,9 +64,9 @@ public class Afflict implements Card{
         }      
         @Override
         public void resolve(){  
-            decorate.addFirst(new CreatureDecorator(target));//aggiungo il decoratore di default in testa alla lista di decoratori
-            decorate.addLast(new AfflictDecorator(target));//aggiungo il decoratore di Afflict in fondo alla lista di decoratori
-            target = decorate.peekLast();//aggiungo l'ultimo decoratore inserito al target
+            target.getDecorator().addFirst(new CreatureDecorator(target));//aggiungo il decoratore di default in testa alla lista di decoratori
+            target.getDecorator().addLast(new AfflictDecorator(target));//aggiungo il decoratore di Afflict in fondo alla lista di decoratori
+            target = target.getDecorator().peekLast();//aggiungo l'ultimo decoratore inserito al target
             if (target.getToughness() <= 0){
                 target.remove();
                 System.out.println("creature:"+target.name()+" removed");
@@ -74,15 +74,14 @@ public class Afflict implements Card{
             else
                 System.out.println("creatura:"+target.name()+":"+target.getPower()+"/"+target.getToughness());
         }
-        @Override
-        protected Enchantment createEnchantment() { return new AfflictEnchantment(owner); }
+        
     }
     
     @Override
     public Effect getEffect(Player owner) { return new AfflictEffect(owner,this);}
     
-    private class AfflictEnchantment extends AbstractEnchantment {
-        public AfflictEnchantment(Player owner) {
+    private class AfflictInstant extends AbstractCard {
+        public AfflictInstant(Player owner) {
             super(owner);
         }
 
@@ -92,8 +91,8 @@ public class Afflict implements Card{
          private final TriggerAction removeaction = new TriggerAction() {
                 @Override
                 public void execute(Object args) {
-                    decorate.removeLast();//rimuovo l'ultimo decoratore dalla lista
-                    target = decorate.getLast();//rimetto il decoratore precedente a quello che ho tolto
+                    target.getDecorator().removeLast();//rimuovo l'ultimo decoratore dalla lista
+                    target = target.getDecorator().getLast();//rimetto il decoratore precedente a quello che ho tolto
                 }
             };      
         @Override

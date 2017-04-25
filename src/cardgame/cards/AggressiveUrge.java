@@ -5,6 +5,8 @@
  */
 package cardgame.cards;
 
+import cardgame.AbstractCard;
+import cardgame.AbstractCardEffect;
 import cardgame.AbstractEnchantment;
 import cardgame.AbstractEnchantmentCardEffect;
 import cardgame.Card;
@@ -26,7 +28,7 @@ import java.util.Scanner;
  * @author Sara
  */
 public class AggressiveUrge implements Card{
-        LinkedList<CreatureDecorator> decorate = new LinkedList();//lista di decoratori
+        
         Creature target; 
     
   private class Factory implements ICardFactory {
@@ -34,9 +36,9 @@ public class AggressiveUrge implements Card{
         public Card create() { return new AggressiveUrge(); }
     }
         
-    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("CalmingVerse",new Factory());
+    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("AggressiveUrge",new Factory());
       
-    private class AggressiveUrgeEffect extends AbstractEnchantmentCardEffect {
+    private class AggressiveUrgeEffect extends AbstractCardEffect {
         public AggressiveUrgeEffect(Player p,Card c) { super(p,c); }
  
         public void getTarget(){
@@ -74,20 +76,18 @@ public class AggressiveUrge implements Card{
         }      
         @Override
         public void resolve(){  
-            decorate.addFirst(new CreatureDecorator(target));//aggiungo il decoratore di default in testa alla lista di decoratori
-            decorate.addLast(new AggressiveUrgeDecorator(target));//aggiungo il decoratore di Afflict in fondo alla lista di decoratori
-            target = decorate.peekLast();//aggiungo l'ultimo decoratore inserito al target
+            target.getDecorator().addFirst(new CreatureDecorator(target));//aggiungo il decoratore di default in testa alla lista di decoratori
+            target.getDecorator().addLast(new AggressiveUrgeDecorator(target));//aggiungo il decoratore di AggressiveUrge in fondo alla lista di decoratori
+            target = target.getDecorator().peekLast();//aggiungo l'ultimo decoratore inserito al target
             System.out.println("creatura:"+target.name()+":"+target.getPower()+"/"+target.getToughness());
         }
-        @Override
-        protected Enchantment createEnchantment() { return new AfflictEnchantment(owner); }
     }
     
     @Override
     public Effect getEffect(Player owner) { return new AggressiveUrgeEffect(owner,this);}
     
-    private class AfflictEnchantment extends AbstractEnchantment {
-        public AfflictEnchantment(Player owner) {
+    private class AggressiveUrgeInstant extends AbstractCard {
+        public AggressiveUrgeInstant(Player owner) {
             super(owner);
         }
 
@@ -97,8 +97,8 @@ public class AggressiveUrge implements Card{
          private final TriggerAction removeaction = new TriggerAction() {
                 @Override
                 public void execute(Object args) {
-                    decorate.removeLast();//rimuovo l'ultimo decoratore dalla lista
-                    target = decorate.getLast();//rimetto il decoratore precedente a quello che ho tolto
+                    target.getDecorator().removeLast();//rimuovo l'ultimo decoratore dalla lista
+                    target = target.getDecorator().getLast();//rimetto il decoratore precedente a quello che ho tolto
                 }
             };      
         @Override

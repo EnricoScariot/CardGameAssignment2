@@ -5,6 +5,8 @@
  */
 package cardgame;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author atorsell
@@ -14,8 +16,11 @@ public abstract class AbstractCreature implements Creature {
     protected Player owner;
     protected boolean isTapped=false;
     protected int damageLeft = getToughness();
+    LinkedList<CreatureDecorator> decorate = new LinkedList();//lista di decoratori propria di ogni creatura
         
         protected AbstractCreature(Player owner) { this.owner=owner; }
+        
+    public LinkedList<CreatureDecorator> getDecorator(){return decorate;}
         
     @Override
         public boolean tap() { 
@@ -45,6 +50,8 @@ public abstract class AbstractCreature implements Creature {
         
     @Override
         public boolean isTapped() { return isTapped; }
+        
+    /*usare owner per attaccare o difendere, questo indica che il giocatore li controlla?*/
     @Override
         public void attack() {} // to do in assignment 2
     @Override
@@ -55,6 +62,7 @@ public abstract class AbstractCreature implements Creature {
             if (damageLeft<=0)
                 owner.destroy(this);        
         }
+        
         
     @Override
         public void resetDamage() { damageLeft = getToughness(); }
@@ -73,6 +81,10 @@ public abstract class AbstractCreature implements Creature {
     @Override
         public String toString() {
             return name() + " (Creature)";
+        }
+    @Override
+        public Player getOwner(){
+            return owner;
         }
         
 }

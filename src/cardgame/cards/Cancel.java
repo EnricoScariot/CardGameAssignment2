@@ -5,6 +5,8 @@
  */
 package cardgame.cards;
 
+import cardgame.AbstractCard;
+import cardgame.AbstractCardEffect;
 import cardgame.AbstractEnchantment;
 import cardgame.AbstractEnchantmentCardEffect;
 import cardgame.AbstractWitchcraft;
@@ -32,9 +34,9 @@ public class Cancel implements Card{
         public Card create() { return new Cancel(); }
     }
         
-    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("CalmingVerse",new Factory());
+    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Cancel",new Factory());
       
-    private class CancelEffect extends AbstractEnchantmentCardEffect {
+    private class CancelEffect extends AbstractCardEffect {
         public CancelEffect(Player p,Card c) { super(p,c); }
         Effect target; 
         
@@ -62,15 +64,13 @@ public class Cancel implements Card{
            System.out.println(" removing " + target.name() + " from stack");
             CardGame.instance.getStack().remove(target);        
         }
-        @Override
-        protected Enchantment createEnchantment() { return new CancelEnchantment(owner); }
     }
     
     @Override
     public Effect getEffect(Player owner) { return new CancelEffect(owner,this);}
     
-    private class CancelEnchantment extends AbstractEnchantment {
-        public CancelEnchantment(Player owner) {
+    private class CancelInstant extends AbstractCard {
+        public CancelInstant(Player owner) {
             super(owner);
         }
 

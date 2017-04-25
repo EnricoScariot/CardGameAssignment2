@@ -5,6 +5,7 @@
  */
 package cardgame;
 
+import java.util.LinkedList;
 import java.util.List;
 /**
  *
@@ -17,6 +18,7 @@ public class CreatureDecorator implements Creature{
     public CreatureDecorator(Creature decorate) {
         this.decorate = decorate; 
     }
+   
     @Override
     public boolean tap() {return decorate.tap();}
     @Override
@@ -47,6 +49,9 @@ public class CreatureDecorator implements Creature{
     public void insert() {decorate.insert();}
     @Override
     public void remove(){ decorate.remove();}
-    
-    
+    @Override
+    public LinkedList<CreatureDecorator> getDecorator() {return decorate.getDecorator();}
+    @Override
+    public Player getOwner() {return decorate.getOwner();}
+  
 }

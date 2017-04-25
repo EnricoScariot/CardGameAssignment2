@@ -62,6 +62,9 @@ public class Reflexologist implements Card {
                                     @Override
                                     public String toString() 
                                         { return "tap: Reflexology does nothing"; }
+
+                                    @Override
+                                    public void getTarget() {}
                                 }
                 ); 
         }

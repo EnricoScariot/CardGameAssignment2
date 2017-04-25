@@ -60,6 +60,8 @@ public class Triggers {
     public static final int EXIT_ENCHANTMENT_FILTER=256;
     public static final int ENTER_WITCHCRAFT_FILTER=512;
     public static final int EXIT_WITCHCRAFT_FILTER=1024;
+    public static final int ENTER_INSTANT_FILTER=2048;
+    public static final int EXIT_INSTANT_FILTER=4096;
     
     
 }

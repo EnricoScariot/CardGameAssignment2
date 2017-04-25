@@ -47,6 +47,7 @@ public class BoilingHeart implements Card {
         }
         @Override
         protected Witchcraft createWitchcraft() { return new BoilingHeartWitchcraft(owner); }
+
     }
     @Override
     public Effect getEffect(Player p) { return new BoilingHeartEffect(p,this); }
