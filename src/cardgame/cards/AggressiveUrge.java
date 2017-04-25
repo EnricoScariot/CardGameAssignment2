@@ -5,7 +5,19 @@
  */
 package cardgame.cards;
 
-import cardgame.*;
+import cardgame.AbstractEnchantment;
+import cardgame.AbstractEnchantmentCardEffect;
+import cardgame.Card;
+import cardgame.CardFactory;
+import cardgame.CardGame;
+import cardgame.Creature;
+import cardgame.CreatureDecorator;
+import cardgame.Effect;
+import cardgame.Enchantment;
+import cardgame.ICardFactory;
+import cardgame.Player;
+import cardgame.TriggerAction;
+import cardgame.Triggers;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -13,21 +25,19 @@ import java.util.Scanner;
  *
  * @author Sara
  */
-
-public class Afflict implements Card{ 
-    LinkedList<CreatureDecorator> decorate = new LinkedList();//lista di decoratori
-    Creature target; 
-     //aggiungo il decoratore di default in testa alla lista di decoratori
+public class AggressiveUrge implements Card{
+        LinkedList<CreatureDecorator> decorate = new LinkedList();//lista di decoratori
+        Creature target; 
     
   private class Factory implements ICardFactory {
         @Override
-        public Card create() { return new Afflict(); }
+        public Card create() { return new AggressiveUrge(); }
     }
         
     private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("CalmingVerse",new Factory());
       
-    private class AfflictEffect extends AbstractEnchantmentCardEffect {
-        public AfflictEffect(Player p,Card c) { super(p,c); }
+    private class AggressiveUrgeEffect extends AbstractEnchantmentCardEffect {
+        public AggressiveUrgeEffect(Player p,Card c) { super(p,c); }
  
         public void getTarget(){
             Scanner reader =  new Scanner(System.in);
@@ -65,21 +75,16 @@ public class Afflict implements Card{
         @Override
         public void resolve(){  
             decorate.addFirst(new CreatureDecorator(target));//aggiungo il decoratore di default in testa alla lista di decoratori
-            decorate.addLast(new AfflictDecorator(target));//aggiungo il decoratore di Afflict in fondo alla lista di decoratori
+            decorate.addLast(new AggressiveUrgeDecorator(target));//aggiungo il decoratore di Afflict in fondo alla lista di decoratori
             target = decorate.peekLast();//aggiungo l'ultimo decoratore inserito al target
-            if (target.getToughness() <= 0){
-                target.remove();
-                System.out.println("creature:"+target.name()+" removed");
-            }
-            else
-                System.out.println("creatura:"+target.name()+":"+target.getPower()+"/"+target.getToughness());
+            System.out.println("creatura:"+target.name()+":"+target.getPower()+"/"+target.getToughness());
         }
         @Override
         protected Enchantment createEnchantment() { return new AfflictEnchantment(owner); }
     }
     
     @Override
-    public Effect getEffect(Player owner) { return new AfflictEffect(owner,this);}
+    public Effect getEffect(Player owner) { return new AggressiveUrgeEffect(owner,this);}
     
     private class AfflictEnchantment extends AbstractEnchantment {
         public AfflictEnchantment(Player owner) {
@@ -87,7 +92,7 @@ public class Afflict implements Card{
         }
 
         @Override
-        public String name() {return "Afflict";}       
+        public String name() {return "AggressiveUrge";}       
         
          private final TriggerAction removeaction = new TriggerAction() {
                 @Override
@@ -108,25 +113,26 @@ public class Afflict implements Card{
         }
     }
     
-    private class AfflictDecorator extends CreatureDecorator{
-        public AfflictDecorator(Creature decorate){
+    private class AggressiveUrgeDecorator extends CreatureDecorator{
+        public AggressiveUrgeDecorator(Creature decorate){
             super(decorate);
         }
         @Override
-        public int getPower() {return decorate.getPower()-1;}
+        public int getPower() {return decorate.getPower()+1;}
         @Override
-        public int getToughness() {return decorate.getToughness()-1;}
+        public int getToughness() {return decorate.getToughness()+1;}
     }
        
     @Override
-    public String name() {return "Afflict";}
+    public String name() {return "AggressiveUrge";}
     @Override
     public String type() {return "Instant";}
     @Override
-    public String ruleText() {return "target creatures get -1/-1 until end of turn ";}
+    public String ruleText() {return "target creatures get +1/+1 until end of turn ";}
     @Override
     public boolean isInstant() {return true;}
     @Override
     public String toString() { return name() + " (" + type() + ") [" + ruleText() +"]";}
     
 }
+
