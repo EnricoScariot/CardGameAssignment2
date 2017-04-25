@@ -9,10 +9,13 @@ import cardgame.AbstractCreature;
 import cardgame.AbstractCreatureCardEffect;
 import cardgame.Card;
 import cardgame.CardFactory;
+import cardgame.CardGame;
 import cardgame.Creature;
 import cardgame.Effect;
 import cardgame.ICardFactory;
 import cardgame.Player;
+import cardgame.TriggerAction;
+import cardgame.Triggers;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,11 +43,54 @@ public class ArgothianEnchantress implements Card{
     
     
     private class ArgothianEnchantressCreature extends AbstractCreature {
+        Player owner;
+        
         ArrayList<Effect> all_effects= new ArrayList<>();
         ArrayList<Effect> tap_effects= new ArrayList<>();
         
+        
         ArgothianEnchantressCreature(Player owner) { 
             super(owner);
+            all_effects.add( new Effect() { 
+                                    @Override
+                                    public String name(){return "Argothian Enchantress";}                                 
+                                    @Override
+                                    public boolean play() { 
+                                        CardGame.instance.getStack().push(this);
+                                        return tap(); 
+                                    }
+                                    @Override
+                                    public void resolve() {
+                                    Player owner = CardGame.instance.getCurrentPlayer();
+                                    }
+                                    @Override
+                                    public String toString() 
+                                        { return "Whenever you cast an enchantment spell,draw a card"; }
+                                    @Override
+                                    public void getTarget() {}
+                                }
+                ); 
+        }
+        
+        private final TriggerAction DrawAction = new TriggerAction() {
+                @Override
+                public void execute(Object args) {
+                    if (CardGame.instance.getCurrentPlayer().equals(owner))
+                        CardGame.instance.getCurrentPlayer().draw();
+                    /*altrimenti non pesca*/
+                }
+            };
+        
+        @Override
+        public void insert() {
+            super.insert();
+            CardGame.instance.getTriggers().register(Triggers.ENTER_ENCHANTMENT_FILTER, DrawAction);
+        }
+        
+        @Override
+        public void remove() {
+            super.remove();
+            CardGame.instance.getTriggers().deregister(DrawAction);
         }
         
         @Override

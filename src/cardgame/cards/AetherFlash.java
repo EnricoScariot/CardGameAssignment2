@@ -10,6 +10,7 @@ import cardgame.AbstractEnchantmentCardEffect;
 import cardgame.Card;
 import cardgame.CardFactory;
 import cardgame.CardGame;
+import cardgame.Creature;
 import cardgame.Effect;
 import cardgame.Enchantment;
 import cardgame.ICardFactory;
@@ -17,8 +18,6 @@ import cardgame.Player;
 import cardgame.TriggerAction;
 import cardgame.Triggers;
 import java.util.LinkedList;
-import java.util.Scanner;
-
 /**
  *
  * @author Sara
@@ -35,7 +34,9 @@ public class AetherFlash implements Card{
     private class AetherFlashEffect extends AbstractEnchantmentCardEffect {
         public AetherFlashEffect(Player p,Card c) { super(p,c); }
         
-        public void resolve(){}            
+        public void resolve(){
+            System.out.println("Whenever a creature comes into play,Aether Flash deals 2 damage to it");
+        }            
         @Override
         protected Enchantment createEnchantment() { return new AetherFlashEnchantment(owner); }
         }
@@ -52,8 +53,12 @@ public class AetherFlash implements Card{
                 @Override
                 public void execute(Object args) {
                     Creature target;
+                    
+                    int size = CardGame.instance.getCurrentPlayer().getCreatures().size();
+                    /*un array list parte dall'indice 0 vero?*/
                     /*prendi l'utima creatura inserita*/
-                    target.inflictDamage(3);
+                    target = CardGame.instance.getCurrentPlayer().getCreatures().get(size-1);
+                    target.inflictDamage(2);
                 }
             };      
         @Override
