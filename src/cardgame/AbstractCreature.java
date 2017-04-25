@@ -74,4 +74,5 @@ public abstract class AbstractCreature implements Creature {
         public String toString() {
             return name() + " (Creature)";
         }
+        
 }

@@ -14,4 +14,6 @@ public interface Effect {
     boolean play();  
     // resolves the effect
     void resolve();
+    
+    String name();
 }

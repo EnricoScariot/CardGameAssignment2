@@ -50,8 +50,11 @@ public class Reflexologist implements Card {
             super(owner);
             all_effects.add( new Effect() { 
                                     @Override
+                                    public String name(){return "Reflexologist";}
+                                    
+                                    @Override
                                     public boolean play() { 
-                                        CardGame.instance.getStack().add(this);
+                                        CardGame.instance.getStack().push(this);
                                         return tap(); 
                                     }
                                     @Override

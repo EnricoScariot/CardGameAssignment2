@@ -23,5 +23,8 @@ public abstract class AbstractCardEffect extends AbstractEffect {
     }
     @Override
     public String toString() { return card.toString(); }
+    
+    @Override
+    public String name(){ return card.name();}
   
 }

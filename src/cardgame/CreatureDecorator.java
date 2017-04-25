@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 public class CreatureDecorator implements Creature{
-    Creature decorate;
+    public Creature decorate;
     
     public CreatureDecorator(Creature decorate) {
         this.decorate = decorate; 

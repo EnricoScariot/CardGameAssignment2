@@ -22,6 +22,8 @@ import cardgame.cards.NorwoodRanger;
 import cardgame.cards.SavorTheMoment;
 import cardgame.cards.WorldAtWar;
 import cardgame.CardFactory;
+import cardgame.cards.Afflict;
+import cardgame.cards.Cancel;
 /**
  *
  * @author atorsell
@@ -43,13 +45,15 @@ public class CardGame {
         ArrayList<Card> deck = new ArrayList<>();
     //    for (int i=0; i!=3; ++i) deck.add(new Homeopathy());
     //    for (int i=0; i!=3; ++i) deck.add(new Reflexologist());
-        for (int i=0; i!=2; ++i) deck.add(new BoilingHeart());
-        for (int i=0; i!=2; ++i) deck.add(new NorwoodRanger());
-        for (int i=0; i!=2; ++i) deck.add(new BronzeSable());
+    //    for (int i=0; i!=2; ++i) deck.add(new BoilingHeart());
+        for (int i=0; i!=3; ++i) deck.add(new NorwoodRanger());
+        for (int i=0; i!=3; ++i) deck.add(new BronzeSable());
         for (int i=0; i!=2; ++i) deck.add(new FriendlyEnvironment());
-        for (int i=0; i!=2; ++i) deck.add(new DayOfJudgment());
-        for (int i=0; i!=2; ++i) deck.add(new SavorTheMoment());
+    //    for (int i=0; i!=2; ++i) deck.add(new DayOfJudgment());
+    //    for (int i=0; i!=2; ++i) deck.add(new SavorTheMoment());
         for (int i=0; i!=2; ++i) deck.add(new Fatigue());
+        for (int i=0; i!=2; ++i) deck.add(new Cancel());
+        for (int i=0; i!=2; ++i) deck.add(new Afflict());
     //    for (int i=0; i!=2; ++i) deck.add(new FalsePeace());
     //    for (int i=0; i!=2; ++i) deck.add(new WorldAtWar());
         
