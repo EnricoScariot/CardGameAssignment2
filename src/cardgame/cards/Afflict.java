@@ -15,9 +15,10 @@ import java.util.Scanner;
  */
 
 public class Afflict implements Card{ 
-    LinkedList<CreatureDecorator> decorate = new LinkedList();//lista di decoratori, serve?
+    LinkedList<CreatureDecorator> decorate = new LinkedList();//lista di decoratori
     Creature target; 
-
+     //aggiungo il decoratore di default in testa alla lista di decoratori
+    
   private class Factory implements ICardFactory {
         @Override
         public Card create() { return new Afflict(); }
@@ -62,8 +63,10 @@ public class Afflict implements Card{
             return super.play();
         }      
         @Override
-        public void resolve(){         
-            target = new AfflictDecorator(target);
+        public void resolve(){  
+            decorate.addFirst(new CreatureDecorator(target));//aggiungo il decoratore di default in testa alla lista di decoratori
+            decorate.addLast(new AfflictDecorator(target));//aggiungo il decoratore di Afflict in fondo alla lista di decoratori
+            target = decorate.peekLast();//aggiungo l'ultimo decoratore inserito al target
             if (target.getToughness() <= 0){
                 target.remove();
                 System.out.println("creature:"+target.name()+" removed");
@@ -89,7 +92,7 @@ public class Afflict implements Card{
          private final TriggerAction removeaction = new TriggerAction() {
                 @Override
                 public void execute(Object args) {
-                    target = new CreatureDecorator(target);//rimetto il decoratore di default
+                    target = decorate.removeLast();//rimetto il decoratore di default
                 }
             };      
         @Override
