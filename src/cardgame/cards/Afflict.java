@@ -31,31 +31,27 @@ public class Afflict implements Card{
  
         public void getTarget(){
             Scanner reader =  new Scanner(System.in);
-            LinkedList <Creature> creature = new LinkedList();
-            LinkedList <Creature> creature2 = new LinkedList();
-            creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
-            creature2.addAll(CardGame.instance.getCurrentAdversary().getCreatures()); 
             int idx,i=1;
             System.out.println("vuoi scegliere come target una tua creatura o una avversaria?0/1");
             idx = reader.nextInt();
             if(idx == 0){
                 System.out.println("Scegli la creatura target:");
                 System.out.println("Ceature del giocatore:"+ CardGame.instance.getCurrentPlayer().name());
-                for (Creature c : creature) {
+                for (Creature c : CardGame.instance.getCurrentPlayer().getCreatures()) {
                     System.out.println(i +")"+c.name());
                     i++;
                 }
             idx = reader.nextInt()-1;
-            target = creature.get(idx);
+            target = CardGame.instance.getCurrentPlayer().getCreatures().get(idx);
             }else if (idx == 1){
                 System.out.println("Scegli la creatura target:");
                 System.out.println("Ceature del giocatore:"+ CardGame.instance.getCurrentAdversary().name());
-                for (Creature c : creature2) {
+                for (Creature c : CardGame.instance.getCurrentPlayer().getCreatures()) {
                     System.out.println(i +")"+c.name());
                     i++;
              }
             idx = reader.nextInt()-1;  
-            target = creature2.get(idx);
+            target = CardGame.instance.getCurrentAdversary().getCreatures().get(idx);
             }                 
         }      
         public boolean play() {
@@ -64,17 +60,17 @@ public class Afflict implements Card{
         }      
         @Override
         public void resolve(){  
-            target.getDecorator().addFirst(new CreatureDecorator(target));//aggiungo il decoratore di default in testa alla lista di decoratori
+           /* target.getDecorator().addFirst(new CreatureDecorator(target));//aggiungo il decoratore di default in testa alla lista di decoratori
             target.getDecorator().addLast(new AfflictDecorator(target));//aggiungo il decoratore di Afflict in fondo alla lista di decoratori
             target = target.getDecorator().peekLast();//aggiungo l'ultimo decoratore inserito al target
-            if (target.getToughness() <= 0){
+           /* if (target.getToughness() <= 0){
                 target.remove();
                 System.out.println("creature:"+target.name()+" removed");
             }
-            else
-                System.out.println("creatura:"+target.name()+":"+target.getPower()+"/"+target.getToughness());
-        }
-        
+            else*/
+              /*  System.out.println("creatura:"+target.name()+":"+target.getPower()+"/"+target.getToughness());*/
+              target = new AfflictDecorator(target);
+        }      
     }
     
     @Override
@@ -90,11 +86,9 @@ public class Afflict implements Card{
         
          private final TriggerAction removeaction = new TriggerAction() {
                 @Override
-                public void execute(Object args) {
-                    target.getDecorator().removeLast();//rimuovo l'ultimo decoratore dalla lista
-                    target = target.getDecorator().getLast();//rimetto il decoratore precedente a quello che ho tolto
+                public void execute(Object args) {            
                 }
-            };      
+            };     
         @Override
         public void insert() {
             super.insert();
@@ -111,6 +105,8 @@ public class Afflict implements Card{
         public AfflictDecorator(Creature decorate){
             super(decorate);
         }
+        @Override
+        public String name(){return "pippo";}
         @Override
         public int getPower() {return decorate.getPower()-1;}
         @Override

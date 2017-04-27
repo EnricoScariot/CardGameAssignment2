@@ -56,9 +56,10 @@ public class AetherBarrier implements Card{
         private final TriggerAction discardaction = new TriggerAction() {
                 @Override
                 public void execute(Object args) {
+                    //if(args.instanceOf(Creature)){
                     LinkedList<Permanent> permanent= new LinkedList();
                     Player owner = CardGame.instance.getCurrentPlayer();
-                    permanent.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
+                   // permanent.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
                     permanent.addAll(CardGame.instance.getCurrentPlayer().getEnchantments());
                     int i = 0,idx;
                     Scanner reader = new Scanner(System.in);
@@ -73,6 +74,7 @@ public class AetherBarrier implements Card{
                         idx = reader.nextInt();
                         permanent.remove(idx);
                     }
+                    //}
                 }
             };      
         @Override

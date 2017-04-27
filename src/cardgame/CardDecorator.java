@@ -24,5 +24,9 @@ public class CardDecorator implements Card{
     public String ruleText() {return card.ruleText();}
     @Override
     public boolean isInstant() {return card.isInstant();}
+
+    void decorate(AbstractCreature aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

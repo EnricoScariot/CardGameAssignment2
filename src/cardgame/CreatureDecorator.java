@@ -49,9 +49,15 @@ public class CreatureDecorator implements Creature{
     public void insert() {decorate.insert();}
     @Override
     public void remove(){ decorate.remove();}
-    @Override
-    public LinkedList<CreatureDecorator> getDecorator() {return decorate.getDecorator();}
+    //@Override
+    //public LinkedList<CreatureDecorator> getDecorator() {return decorate.getDecorator();}
     @Override
     public Player getOwner() {return decorate.getOwner();}
+    @Override
+        public String toString() {
+            return name() + " (Creature)";
+        }
+    @Override
+    public LinkedList<CreatureDecorator> getDecorator() {return decorate.getDecorator();}
   
 }

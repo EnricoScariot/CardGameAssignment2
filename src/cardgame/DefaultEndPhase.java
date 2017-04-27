@@ -17,13 +17,14 @@ public class DefaultEndPhase implements Phase {
         
         CardGame.instance.getTriggers().trigger(Triggers.END_FILTER);
         
+        
         for(Creature c:currentPlayer.getCreatures()) {
-            System.out.println("...reset damage to " + c.name());
+            System.out.println("...reset damage to " + c.name()+c.getPower()+"/"+c.getToughness());
             c.resetDamage();
         }
         
         for(Creature c:CardGame.instance.getCurrentAdversary().getCreatures()) {
-            System.out.println("...reset damage to adversary creature " + c.name());
+            System.out.println("...reset damage to adversary creature " + c.name()+c.getPower()+"/"+c.getToughness());
             c.resetDamage();
         }
         /*elimino le stregonerie alla fine del turno*/

@@ -5,7 +5,11 @@
  */
 package cardgame;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -20,8 +24,25 @@ public class CardFactory {
     factoryMap.put(s,f);
     }
     
+    public ICardFactory getFactory(String s){
+        return factoryMap.get(s);
+    }
+    
+    
     private CardFactory(){
-        InputStream deck = getClass().getClassLoader().getResourceAsStream("cardgame/cards");
+        
+        InputStream deck = getClass().getClassLoader().getResourceAsStream("cardgame/cards");     
+        InputStreamReader isr = new InputStreamReader (deck);
+        BufferedReader br = new BufferedReader ( isr );
+        /*
+        try{
+            while(true){
+                String s = br.readLine();
+                System.out.println(s);
+            }
+        }
+        catch(IOException e){}*/
+        
     }
 
 public static class StaticInitializer {
@@ -30,6 +51,6 @@ public static class StaticInitializer {
     }
   }
  /*per debug*/
- public static Set<String> getMapCards() { return factoryMap.keySet(); }
+ public static Collection<ICardFactory> getMapCards() { return factoryMap.values(); }
 
 }
