@@ -5,6 +5,7 @@
  */
 package cardgame;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -17,6 +18,9 @@ public abstract class AbstractCreature implements Creature {
     protected boolean isTapped=false;
     protected int damageLeft = getToughness();
     LinkedList<CreatureDecorator> decorate = new LinkedList();//lista di decoratori propria di ogni creatura
+    
+    ArrayList<Creature> difensori=new ArrayList<>(); // array delle creature che difendono l'attacco di this
+   
         
         protected AbstractCreature(Player owner) { this.owner=owner; }
         
@@ -52,11 +56,16 @@ public abstract class AbstractCreature implements Creature {
         public boolean isTapped() { return isTapped; }
         
     /*usare owner per attaccare o difendere, questo indica che il giocatore li controlla?*/
+      @Override
+        public void attack() {
+            isTapped=true;
+        } // to do in assignment 2
     @Override
-        public void attack() {} // to do in assignment 2
-    @Override
-        public void defend(Creature c) {} // to do in assignment 2
-    @Override
+        public void defend(Creature c) { // questa creatura e' difesa dalla creatura c
+            difensori.add(c);
+              
+        } // to do in assignment 2
+        
         public void inflictDamage(int dmg) { 
             damageLeft -= dmg; 
             if (damageLeft<=0)
@@ -86,5 +95,10 @@ public abstract class AbstractCreature implements Creature {
         public Player getOwner(){
             return owner;
         }
+        
+       public ArrayList<Creature> defenders(){
+           return difensori;
+       }  
+     
         
 }

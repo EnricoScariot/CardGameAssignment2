@@ -32,6 +32,10 @@ public class Player {
     private int life=10;
     public int getLife() {return life;}
     
+      public void setLife(int lifepoints){
+        this.life=lifepoints;
+    }
+    
     // need to attach strategy/decorator
     public void inflictDamage(int pts) {
         life -= pts;

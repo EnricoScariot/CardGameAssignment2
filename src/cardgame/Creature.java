@@ -5,6 +5,7 @@
  */
 package cardgame;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public interface Creature extends Permanent{
     // depending on state, e.g., tapped/untapped
     List<Effect> avaliableEffects();
     
+     ArrayList<Creature> defenders(); // restituisce l'array delle creature che vogliono parare l'attacco della mia creatura
 
    
 }
