@@ -17,6 +17,7 @@ public class DefaultEndPhase implements Phase {
         
         CardGame.instance.getTriggers().trigger(Triggers.END_FILTER);
         
+        
         for(Creature c:currentPlayer.getCreatures()) {
             System.out.println("...reset damage to " + c.name()+c.getPower()+"/"+c.getToughness());
             c.resetDamage();

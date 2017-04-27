@@ -17,9 +17,11 @@ public abstract class AbstractCreatureCardEffect extends AbstractCardEffect {
     Creature c = createCreature();
     CreatureDecorator dummy = new CreatureDecorator(c);
     
+    
     @Override
-    public void resolve() {      
-        owner.getCreatures().add(dummy);//inserisce la creatura nell'elenco delle creature nel campo
-        dummy.insert();
+    public void resolve() { 
+        Creature c = createCreature();       
+        owner.getCreatures().add(c);//inserisce la creatura nell'elenco delle creature nel campo
+        c.insert();
     }
 }
