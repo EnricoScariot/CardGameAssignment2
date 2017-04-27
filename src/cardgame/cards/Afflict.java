@@ -67,12 +67,12 @@ public class Afflict implements Card{
             target.getDecorator().addFirst(new CreatureDecorator(target));//aggiungo il decoratore di default in testa alla lista di decoratori
             target.getDecorator().addLast(new AfflictDecorator(target));//aggiungo il decoratore di Afflict in fondo alla lista di decoratori
             target = target.getDecorator().peekLast();//aggiungo l'ultimo decoratore inserito al target
-            if (target.getToughness() <= 0){
+           /* if (target.getToughness() <= 0){
                 target.remove();
                 System.out.println("creature:"+target.name()+" removed");
             }
-            else
-                System.out.println("creatura:"+target.name()+":"+target.getPower()+"/"+target.getToughness());
+            else*/
+              /*  System.out.println("creatura:"+target.name()+":"+target.getPower()+"/"+target.getToughness());*/
         }
         
     }

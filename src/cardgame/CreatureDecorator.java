@@ -53,5 +53,9 @@ public class CreatureDecorator implements Creature{
     public LinkedList<CreatureDecorator> getDecorator() {return decorate.getDecorator();}
     @Override
     public Player getOwner() {return decorate.getOwner();}
+    @Override
+        public String toString() {
+            return name() + " (Creature)";
+        }
   
 }
