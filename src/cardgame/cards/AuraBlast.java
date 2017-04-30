@@ -15,6 +15,7 @@ import cardgame.Effect;
 import cardgame.Enchantment;
 import cardgame.ICardFactory;
 import cardgame.Player;
+import cardgame.Targetable;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -23,18 +24,18 @@ import java.util.Scanner;
  * @author Sara
  */
 public class AuraBlast implements Card{
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new AuraBlast(); }
     }
         
-    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Aura Blast",new Factory());
+    private static CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Aura Blast",new Factory());
 
-    private class AuraBlastEffect extends AbstractEnchantmentCardEffect {
+    private class AuraBlastEffect extends AbstractEnchantmentCardEffect implements Targetable{
         public AuraBlastEffect(Player p,Card c) { super(p,c); }
         Enchantment target;
         @Override
-        public void getTarget(){
+        public void pickTarget(){
             int i = 0,idx;
             Scanner reader = new Scanner(System.in);
             LinkedList <Enchantment> enchantment = new LinkedList();
@@ -68,7 +69,7 @@ public class AuraBlast implements Card{
             CardGame.instance.getCurrentAdversary().draw();           
         }
         public boolean play() {
-            getTarget();
+            pickTarget();
             return super.play();
         }            
         @Override

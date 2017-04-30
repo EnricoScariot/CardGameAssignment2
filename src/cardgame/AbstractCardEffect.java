@@ -16,8 +16,6 @@ public abstract class AbstractCardEffect extends AbstractEffect {
     
     protected AbstractCardEffect(Player p, Card c) { owner=p; card=c; }
     
-    
-    
     @Override
     public boolean play() { 
         owner.getHand().remove(card);

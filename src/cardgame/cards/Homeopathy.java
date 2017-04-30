@@ -20,12 +20,12 @@ import cardgame.Player;
 public class Homeopathy implements Card {
     
     
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new Homeopathy(); }
     }
         
-    private StaticInitializer initializer = new StaticInitializer("Homeopathy",new Factory());
+    private static StaticInitializer initializer = new StaticInitializer("Homeopathy",new Factory());
     
     private class HomeopathyEffect extends AbstractCardEffect {
         public HomeopathyEffect(Player p, Card c) { super(p,c); }

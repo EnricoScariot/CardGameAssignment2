@@ -24,12 +24,12 @@ import java.util.LinkedList;
  */
 public class AetherFlash implements Card{
     
-     private class Factory implements ICardFactory {
+     private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new AetherFlash(); }
     }
         
-    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Aether Flash ",new Factory());
+    private static CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Aether Flash ",new Factory());
 
     private class AetherFlashEffect extends AbstractEnchantmentCardEffect {
         public AetherFlashEffect(Player p,Card c) { super(p,c); }
@@ -52,13 +52,8 @@ public class AetherFlash implements Card{
         private final TriggerAction damageaction = new TriggerAction() {
                 @Override
                 public void execute(Object args) {
-                    Creature target;
-                    
-                    int size = CardGame.instance.getCurrentPlayer().getCreatures().size();
-                    /*un array list parte dall'indice 0 vero?*/
-                    /*prendi l'utima creatura inserita*/
-                    target = CardGame.instance.getCurrentPlayer().getCreatures().get(size-1);
-                    target.inflictDamage(2);
+                    if(args instanceof Creature )                 
+                        ((Creature)args).inflictDamage(2); 
                 }
             };      
         @Override

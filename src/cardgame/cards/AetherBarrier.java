@@ -27,12 +27,12 @@ import java.util.Scanner;
  */
 public class AetherBarrier implements Card{
         
-     private class Factory implements ICardFactory {
+     private static  class Factory implements ICardFactory {
         @Override
         public Card create() { return new AetherBarrier(); }
     }
         
-    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("AetherBarrier",new Factory());
+    private static CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("AetherBarrier",new Factory());
 
     private class AetherBarrierEffect extends AbstractEnchantmentCardEffect {
         public AetherBarrierEffect(Player p,Card c) { super(p,c); }
@@ -55,11 +55,9 @@ public class AetherBarrier implements Card{
         
         private final TriggerAction discardaction = new TriggerAction() {
                 @Override
-                public void execute(Object args) {
-                    //if(args.instanceOf(Creature)){
+                public void execute(Object args) {                 
                     LinkedList<Permanent> permanent= new LinkedList();
                     Player owner = CardGame.instance.getCurrentPlayer();
-                   // permanent.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
                     permanent.addAll(CardGame.instance.getCurrentPlayer().getEnchantments());
                     int i = 0,idx;
                     Scanner reader = new Scanner(System.in);
@@ -74,7 +72,7 @@ public class AetherBarrier implements Card{
                         idx = reader.nextInt();
                         permanent.remove(idx);
                     }
-                    //}
+                    
                 }
             };      
         @Override

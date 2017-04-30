@@ -24,12 +24,12 @@ import java.util.List;
  */
 public class Reflexologist implements Card {
     
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new Reflexologist(); }
     }
         
-    private StaticInitializer initializer = new StaticInitializer("Reflexologist",new Factory());
+    private static StaticInitializer initializer = new StaticInitializer("Reflexologist",new Factory());
     
     
     
@@ -62,9 +62,6 @@ public class Reflexologist implements Card {
                                     @Override
                                     public String toString() 
                                         { return "tap: Reflexology does nothing"; }
-
-                                    @Override
-                                    public void getTarget() {}
                                 }
                 ); 
         }

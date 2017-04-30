@@ -32,12 +32,12 @@ import java.util.Scanner;
  */
 public class BenevolentAncestor implements Card {
     Creature target;
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new BenevolentAncestor(); }
     }
         
-    private StaticInitializer initializer = new StaticInitializer("Benevolent Ancestor",new Factory());
+    private static StaticInitializer initializer = new StaticInitializer("Benevolent Ancestor",new Factory());
         
         
  private class BenevolentAncestorEffect extends AbstractCreatureCardEffect {

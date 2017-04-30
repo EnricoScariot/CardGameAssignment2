@@ -9,11 +9,13 @@ import cardgame.AbstractWitchcraft;
 import cardgame.AbstractWitchcraftCardEffect;
 import cardgame.Card;
 import cardgame.CardFactory;
+import cardgame.CardFactory.StaticInitializer;
 import cardgame.CardGame;
 import cardgame.Creature;
 import cardgame.Effect;
 import cardgame.ICardFactory;
 import cardgame.Player;
+import cardgame.Targetable;
 import cardgame.Witchcraft;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -24,18 +26,18 @@ import java.util.Scanner;
  */
 public class VolcanicHammer implements Card{
     
-private class Factory implements ICardFactory {
+private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new BoilingHeart(); }
     }
         
-    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("VolcanicHammer",new Factory());
+    private static StaticInitializer initializer = new StaticInitializer("VolcanicHammer",new Factory());
 
-    private class VolcanicHammerEffect extends AbstractWitchcraftCardEffect {
+    private class VolcanicHammerEffect extends AbstractWitchcraftCardEffect implements Targetable {
         public VolcanicHammerEffect(Player p,Card c) { super(p,c); }
         int idx;
-        public void getTarget(){
-            
+        @Override
+        public void pickTarget(){          
             Scanner reader =  new Scanner(System.in);
             System.out.println("Vuoi colpire le creature in campo o il tuo avversario?(1/2)");
             idx = reader.nextInt()-1;

@@ -27,6 +27,7 @@ public interface Creature extends Permanent{
     int getDamage();
     Player getOwner();
     LinkedList<CreatureDecorator> getDecorator();
+    void setDecorator(CreatureDecorator cd);
     
     // returns all the effects associated to this creature
     List<Effect> effects();

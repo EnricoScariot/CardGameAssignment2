@@ -29,19 +29,20 @@ public class CardFactory {
     }
     
     
-    private CardFactory(){
+    public CardFactory(){
         
         InputStream deck = getClass().getClassLoader().getResourceAsStream("cardgame/cards");     
         InputStreamReader isr = new InputStreamReader (deck);
         BufferedReader br = new BufferedReader ( isr );
-        /*
+       /*
         try{
             while(true){
                 String s = br.readLine();
                 System.out.println(s);
             }
         }
-        catch(IOException e){}*/
+        catch(IOException e){}
+        */
         
     }
 

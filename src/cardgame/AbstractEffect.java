@@ -15,6 +15,5 @@ public abstract class AbstractEffect implements Effect {
         CardGame.instance.getStack().push(this);
         return true;
     }
-    public void getTarget(){}
 
 }

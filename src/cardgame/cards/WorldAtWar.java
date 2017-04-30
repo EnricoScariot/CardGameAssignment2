@@ -8,7 +8,6 @@ package cardgame.cards;
 import cardgame.AbstractWitchcraft;
 import cardgame.AbstractWitchcraftCardEffect;
 import cardgame.Card;
-import cardgame.CardFactory;
 import cardgame.CardFactory.StaticInitializer;
 import cardgame.CardGame;
 import cardgame.Creature;
@@ -17,23 +16,21 @@ import cardgame.ICardFactory;
 import cardgame.PhaseManager;
 import cardgame.Phases;
 import cardgame.Player;
-import cardgame.SkipPhase;
 import cardgame.Witchcraft;
 
 /**
  *
  * @author Sara
  */
-
- /*da completare(non ho fatto ancora nulla)*/  
+ 
 public class WorldAtWar implements Card{
     
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new WorldAtWar(); }
     }
         
-    private StaticInitializer initializer = new StaticInitializer("World At War",new Factory());
+    private static StaticInitializer initializer = new StaticInitializer("World At War",new Factory());
     
     private class WorldAtWarEffect extends AbstractWitchcraftCardEffect {
         public WorldAtWarEffect(Player p,Card c) { super(p,c); }

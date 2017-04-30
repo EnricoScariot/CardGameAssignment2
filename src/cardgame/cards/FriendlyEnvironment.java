@@ -11,7 +11,6 @@ import cardgame.Enchantment;
 import cardgame.Player;
 import cardgame.AbstractEnchantmentCardEffect;
 import cardgame.AbstractEnchantment;
-import cardgame.CardFactory;
 import cardgame.CardFactory.StaticInitializer;
 import cardgame.CardGame;
 import cardgame.Creature;
@@ -26,12 +25,12 @@ import cardgame.Triggers;
  */
 public class FriendlyEnvironment implements Card {
     
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new FriendlyEnvironment(); }
     }
         
-    private StaticInitializer initializer = new StaticInitializer("Friendly Environment",new Factory());
+    private static StaticInitializer initializer = new StaticInitializer("Friendly Environment",new Factory());
     
     
     private class FriendlyEnvironmentEffect extends AbstractEnchantmentCardEffect {

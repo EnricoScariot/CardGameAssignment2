@@ -24,17 +24,17 @@ import java.util.LinkedList;
  * @author Sara
  */
 public class AncestralMask implements Card{
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new AncestralMask(); }
     }
     
         
-    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Ancestral Mask",new Factory());
+    private static CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Ancestral Mask",new Factory());
 
     private class AncestralMaskEffect extends AbstractEnchantmentCardEffect {
         public AncestralMaskEffect(Player p,Card c) { super(p,c); }
-        
+        @Override
         public void resolve(){
             LinkedList <Creature> creature = new LinkedList();
             creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());

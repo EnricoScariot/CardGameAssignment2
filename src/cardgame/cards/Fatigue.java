@@ -8,7 +8,6 @@ package cardgame.cards;
 import cardgame.AbstractWitchcraft;
 import cardgame.AbstractWitchcraftCardEffect;
 import cardgame.Card;
-import cardgame.CardFactory;
 import cardgame.CardFactory.StaticInitializer;
 import cardgame.CardGame;
 import cardgame.Effect;
@@ -16,6 +15,7 @@ import cardgame.ICardFactory;
 import cardgame.Phases;
 import cardgame.Player;
 import cardgame.SkipPhase;
+import cardgame.Targetable;
 import cardgame.Witchcraft;
 import java.util.Scanner;
 
@@ -25,18 +25,18 @@ import java.util.Scanner;
  */
 public class Fatigue implements Card{
     
-   private class Factory implements ICardFactory {
+   private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new Fatigue(); }
     }
         
-    private StaticInitializer initializer = new StaticInitializer("Fatigue",new Factory());
+    private static StaticInitializer initializer = new StaticInitializer("Fatigue",new Factory());
       
-    private class FatigueEffect extends AbstractWitchcraftCardEffect {
+    private class FatigueEffect extends AbstractWitchcraftCardEffect implements Targetable{
         public FatigueEffect(Player p,Card c) { super(p,c); }
         Player target;
-        
-         public void getTarget(){
+        @Override
+         public void pickTarget(){
             Scanner reader =  new Scanner(System.in);
             int idx;          
             do{
@@ -45,8 +45,9 @@ public class Fatigue implements Card{
             }while(idx < 0 || idx > 1);
             target = CardGame.instance.getPlayer(idx);    
         }
+        @Override
         public boolean play() {
-            getTarget();
+            pickTarget();
             return super.play();
         }
         

@@ -7,7 +7,6 @@ package cardgame.cards;
 import cardgame.AbstractCreature;
 import cardgame.AbstractCreatureCardEffect;
 import cardgame.Card;
-import cardgame.CardFactory;
 import cardgame.CardFactory.StaticInitializer;
 import cardgame.Creature;
 import cardgame.Effect;
@@ -23,12 +22,12 @@ import java.util.List;
  */
 public class BronzeSable implements Card {
     
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new BronzeSable(); }
     }
         
-    private StaticInitializer initializer = new StaticInitializer("Bronze Sable",new Factory());
+    private static StaticInitializer initializer = new StaticInitializer("Bronze Sable",new Factory());
         
         
  private class BronzeSableEffect extends AbstractCreatureCardEffect {

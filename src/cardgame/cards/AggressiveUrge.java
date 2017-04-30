@@ -7,17 +7,15 @@ package cardgame.cards;
 
 import cardgame.AbstractCard;
 import cardgame.AbstractCardEffect;
-import cardgame.AbstractEnchantment;
-import cardgame.AbstractEnchantmentCardEffect;
 import cardgame.Card;
 import cardgame.CardFactory;
 import cardgame.CardGame;
 import cardgame.Creature;
 import cardgame.CreatureDecorator;
 import cardgame.Effect;
-import cardgame.Enchantment;
 import cardgame.ICardFactory;
 import cardgame.Player;
+import cardgame.Targetable;
 import cardgame.TriggerAction;
 import cardgame.Triggers;
 import java.util.LinkedList;
@@ -31,17 +29,18 @@ public class AggressiveUrge implements Card{
         
         Creature target; 
     
-  private class Factory implements ICardFactory {
+  private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new AggressiveUrge(); }
     }
         
-    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("AggressiveUrge",new Factory());
+    private static CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("AggressiveUrge",new Factory());
       
-    private class AggressiveUrgeEffect extends AbstractCardEffect {
+    private class AggressiveUrgeEffect extends AbstractCardEffect implements Targetable{
         public AggressiveUrgeEffect(Player p,Card c) { super(p,c); }
  
-        public void getTarget(){
+        @Override
+        public void pickTarget(){
             Scanner reader =  new Scanner(System.in);
             LinkedList <Creature> creature = new LinkedList();
             LinkedList <Creature> creature2 = new LinkedList();
@@ -71,7 +70,7 @@ public class AggressiveUrge implements Card{
             }                 
         }      
         public boolean play() {
-            getTarget();
+           pickTarget();
             return super.play();
         }      
         @Override

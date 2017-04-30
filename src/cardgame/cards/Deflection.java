@@ -7,12 +7,11 @@ package cardgame.cards;
 
 import cardgame.AbstractCardEffect;
 import cardgame.AbstractEnchantment;
-import cardgame.AbstractEnchantmentCardEffect;
 import cardgame.Card;
 import cardgame.CardDecorator;
 import cardgame.CardFactory;
+import cardgame.CardFactory.StaticInitializer;
 import cardgame.Effect;
-import cardgame.Enchantment;
 import cardgame.ICardFactory;
 import cardgame.Player;
 
@@ -23,25 +22,24 @@ import cardgame.Player;
 public class Deflection implements Card{
     Effect target; 
      
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new Cancel(); }
     }
         
-    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Deflection",new Factory());
+    private static StaticInitializer initializer = new StaticInitializer("Deflection",new Factory());
       
     private class DeflectionEffect extends AbstractCardEffect {
         public DeflectionEffect(Player p,Card c) { super(p,c); }
-        
-        public void getTarget(){} 
        
         public boolean play() {
-            getTarget();
             return super.play();
         }
        
         @Override
-        public void resolve(){}
+        public void resolve(){
+        /*cambia il target a una magia*/
+        }
     }
     
     @Override

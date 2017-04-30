@@ -8,7 +8,6 @@ package cardgame.cards;
 import cardgame.AbstractWitchcraft;
 import cardgame.AbstractWitchcraftCardEffect;
 import cardgame.Card;
-import cardgame.CardFactory;
 import cardgame.CardFactory.StaticInitializer;
 import cardgame.CardGame;
 import cardgame.Effect;
@@ -24,12 +23,12 @@ import cardgame.Witchcraft;
  */
 public class SavorTheMoment implements Card{
     
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new SavorTheMoment(); }
     }
         
-    private StaticInitializer initializer = new StaticInitializer("Savor The Moment",new Factory());
+    private static StaticInitializer initializer = new StaticInitializer("Savor The Moment",new Factory());
    
     
     private class SavorTheMomentEffect extends AbstractWitchcraftCardEffect {

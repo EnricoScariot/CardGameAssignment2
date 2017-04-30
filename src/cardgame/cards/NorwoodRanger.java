@@ -24,12 +24,12 @@ import java.util.List;
  */
 public class NorwoodRanger implements Card {
     
- private class Factory implements ICardFactory {
+ private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new NorwoodRanger(); }
     }
         
-    private StaticInitializer initializer = new StaticInitializer("Norwood Ranger",new Factory());
+    private static StaticInitializer initializer = new StaticInitializer("Norwood Ranger",new Factory());
     
  private class NorwoodRangerEffect extends AbstractCreatureCardEffect {
         public NorwoodRangerEffect(Player p, Card c) { super(p,c); }

@@ -16,6 +16,4 @@ public interface Effect {
     void resolve();
     
     String name();
-    
-    void getTarget();
 }

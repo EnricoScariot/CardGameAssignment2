@@ -24,13 +24,13 @@ import java.util.LinkedList;
  * @author Sara
  */
 public class Abduction implements Card{
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new Abduction(); }
     }
     
         
-    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Abduction",new Factory());
+    private static CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Abduction",new Factory());
 
     private class AbductionEffect extends AbstractEnchantmentCardEffect {
         public AbductionEffect(Player p,Card c) { super(p,c); }
@@ -78,7 +78,8 @@ public class Abduction implements Card{
         }
         @Override
         public Player getOwner(){
-            return CardGame.instance.getCurrentPlayer();}
+            return CardGame.instance.getCurrentPlayer();
+        }
     }   
     @Override
     public String name() { return "Abduction";}

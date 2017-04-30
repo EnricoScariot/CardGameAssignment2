@@ -7,19 +7,15 @@ package cardgame.cards;
 
 import cardgame.AbstractCard;
 import cardgame.AbstractCardEffect;
-import cardgame.AbstractEnchantment;
-import cardgame.AbstractEnchantmentCardEffect;
-import cardgame.AbstractWitchcraft;
-import cardgame.AbstractWitchcraftCardEffect;
 import cardgame.Card;
 import cardgame.CardFactory;
 import cardgame.CardGame;
 import cardgame.CardStack;
 import cardgame.Effect;
-import cardgame.Enchantment;
 import cardgame.ICardFactory;
 import cardgame.Player;
-import cardgame.Witchcraft;
+import cardgame.Targetable;
+
 import java.util.Scanner;
 
 /**
@@ -29,18 +25,18 @@ import java.util.Scanner;
 
 public class Cancel implements Card{
     
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new Cancel(); }
     }
         
-    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Cancel",new Factory());
+    private static CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Cancel",new Factory());
       
-    private class CancelEffect extends AbstractCardEffect {
+    private class CancelEffect extends AbstractCardEffect implements Targetable{
         public CancelEffect(Player p,Card c) { super(p,c); }
         Effect target; 
-        
-        public void getTarget(){
+        @Override
+        public void pickTarget(){
             Scanner reader =  new Scanner(System.in);
             int idx,i = 1;    
             CardStack stack = CardGame.instance.getStack();
@@ -55,7 +51,7 @@ public class Cancel implements Card{
         }
        
         public boolean play() {
-            getTarget();
+            pickTarget();
             return super.play();
         }
        

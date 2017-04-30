@@ -7,7 +7,6 @@ package cardgame.cards;
 import cardgame.AbstractWitchcraft;
 import cardgame.AbstractWitchcraftCardEffect;
 import cardgame.Card;
-import cardgame.CardFactory;
 import cardgame.CardFactory.StaticInitializer;
 import cardgame.Creature;
 import cardgame.Effect;
@@ -23,12 +22,12 @@ import java.util.LinkedList;
 
 public class BoilingHeart implements Card {
     
-   private class Factory implements ICardFactory {
+   private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new BoilingHeart(); }
     }
         
-    private StaticInitializer initializer = new StaticInitializer("Boiling Heart",new Factory());
+    private static StaticInitializer initializer = new StaticInitializer("Boiling Heart",new Factory());
 
     private class BoilingHeartEffect extends AbstractWitchcraftCardEffect {
         public BoilingHeartEffect(Player p,Card c) { super(p,c); }

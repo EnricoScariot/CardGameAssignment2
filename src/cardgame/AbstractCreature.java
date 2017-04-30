@@ -14,6 +14,7 @@ import java.util.LinkedList;
  */
 public abstract class AbstractCreature implements Creature {
     
+    private Creature decorator; 
     protected Player owner;
     protected boolean isTapped=false;
     protected int damageLeft = getToughness();
@@ -22,8 +23,12 @@ public abstract class AbstractCreature implements Creature {
     ArrayList<Creature> difensori=new ArrayList<>(); // array delle creature che difendono l'attacco di this
    
         
-        protected AbstractCreature(Player owner) { this.owner=owner; }
+        protected AbstractCreature(Player owner) { 
+            this.owner=owner;
+            decorator = this;
+        }
         
+    @Override
     public LinkedList<CreatureDecorator> getDecorator(){return decorate;}
         
     @Override
@@ -75,18 +80,15 @@ public abstract class AbstractCreature implements Creature {
         
     @Override
         public void resetDamage() { damageLeft = getToughness(); }
-    
     @Override
         public void insert() {
             CardGame.instance.getTriggers().trigger(Triggers.ENTER_CREATURE_FILTER,this);
-        }
-    
+        }  
     @Override
         public void remove() {
             owner.getCreatures().remove(this);
             CardGame.instance.getTriggers().trigger(Triggers.EXIT_CREATURE_FILTER,this);
-        }
-    
+        }  
     @Override
         public String toString() {
             return name() + " (Creature)";
@@ -94,11 +96,14 @@ public abstract class AbstractCreature implements Creature {
     @Override
         public Player getOwner(){
             return owner;
-        }
-        
+        }      
        public ArrayList<Creature> defenders(){
            return difensori;
        }  
+       @Override
+       public void setDecorator(CreatureDecorator cd){
+           decorator = cd;
+       }
      
         
 }

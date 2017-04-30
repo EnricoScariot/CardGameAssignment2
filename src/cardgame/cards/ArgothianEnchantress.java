@@ -25,12 +25,12 @@ import java.util.List;
  */
 public class ArgothianEnchantress implements Card{
       
-    private class Factory implements ICardFactory {
+    private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new ArgothianEnchantress(); }
     }
         
-    private CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Argothian Enchantress",new Factory());
+    private static CardFactory.StaticInitializer initializer = new CardFactory.StaticInitializer("Argothian Enchantress",new Factory());
         
         
  private class ArgothianEnchantressEffect extends AbstractCreatureCardEffect {
@@ -65,9 +65,7 @@ public class ArgothianEnchantress implements Card{
                                     }
                                     @Override
                                     public String toString() 
-                                        { return "Whenever you cast an enchantment spell,draw a card"; }
-                                    @Override
-                                    public void getTarget() {}
+                                        { return "Whenever you cast an enchantment spell,draw a card"; }                                    
                                 }
                 ); 
         }

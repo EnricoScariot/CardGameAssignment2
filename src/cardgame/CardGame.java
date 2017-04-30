@@ -33,28 +33,28 @@ public class CardGame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        
-        /*per debug*/
-        
+    public static void main(String[] args) {     
         
         //create decks
         ArrayList<Card> deck = new ArrayList<>();
         /*
+        CardFactory cf = new CardFactory();
+        
         for (ICardFactory f: CardFactory.getMapCards()) {
-                deck.add(f);               
+            Card c = f.create();
+            deck.add(c);               
         }*/
     //    for (int i=0; i!=3; ++i) deck.add(new Homeopathy());
     //    for (int i=0; i!=3; ++i) deck.add(new Reflexologist());
     //    for (int i=0; i!=2; ++i) deck.add(new BoilingHeart());
-        for (int i=0; i!=3; ++i) deck.add(new NorwoodRanger());
-        for (int i=0; i!=3; ++i) deck.add(new BronzeSable());
+          for (int i=0; i!=3; ++i) deck.add(new NorwoodRanger());
+          for (int i=0; i!=3; ++i) deck.add(new BronzeSable());
     //    for (int i=0; i!=2; ++i) deck.add(new FriendlyEnvironment());
     //    for (int i=0; i!=2; ++i) deck.add(new DayOfJudgment());
     //    for (int i=0; i!=2; ++i) deck.add(new SavorTheMoment());
     //    for (int i=0; i!=2; ++i) deck.add(new Fatigue());
     //    for (int i=0; i!=2; ++i) deck.add(new Cancel());
-        for (int i=0; i!=2; ++i) deck.add(new Afflict());
+          for (int i=0; i!=2; ++i) deck.add(new Afflict());
     //    for (int i=0; i!=2; ++i) deck.add(new FalsePeace());
     //    for (int i=0; i!=2; ++i) deck.add(new WorldAtWar());
         
