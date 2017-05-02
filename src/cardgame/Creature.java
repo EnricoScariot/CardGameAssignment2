@@ -5,6 +5,7 @@
  */
 package cardgame;
 
+import cardgame.cards.Afflict;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,8 +27,7 @@ public interface Creature extends Permanent{
     int getToughness();
     int getDamage();
     Player getOwner();
-    LinkedList<CreatureDecorator> getDecorator();
-    void setDecorator(CreatureDecorator cd);
+   
     
     // returns all the effects associated to this creature
     List<Effect> effects();

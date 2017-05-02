@@ -15,13 +15,15 @@ public abstract class AbstractCreatureCardEffect extends AbstractCardEffect {
     // deferred method that creates the creature upon resolution
     protected abstract Creature createCreature();
     Creature c = createCreature();
-    CreatureDecorator dummy = new CreatureDecorator(c);
+  
     
     
     @Override
     public void resolve() { 
-        Creature c = createCreature();       
-        owner.getCreatures().add(c);//inserisce la creatura nell'elenco delle creature nel campo
-        c.insert();
+        Creature c = createCreature();   // qua devo creare il decoratore iniziale e passarlo alla getCreatures    
+        DecoratedCreature dc=new DecoratedCreature(c);
+        
+        owner.getCreatures().add(dc);//inserisce la creatura nell'elenco delle creature nel campo
+        dc.insert();
     }
 }

@@ -7,11 +7,13 @@ package cardgame.cards;
 
 import cardgame.AbstractCard;
 import cardgame.AbstractCardEffect;
+import cardgame.AbstractCreatureDecorator;
 import cardgame.Card;
 import cardgame.CardFactory;
 import cardgame.CardGame;
 import cardgame.Creature;
 import cardgame.CreatureDecorator;
+import cardgame.DecoratedCreature;
 import cardgame.Effect;
 import cardgame.ICardFactory;
 import cardgame.Player;
@@ -27,7 +29,7 @@ import java.util.Scanner;
  */
 public class AggressiveUrge implements Card{
         
-        Creature target; 
+        DecoratedCreature target; 
     
   private static class Factory implements ICardFactory {
         @Override
@@ -42,8 +44,8 @@ public class AggressiveUrge implements Card{
         @Override
         public void pickTarget(){
             Scanner reader =  new Scanner(System.in);
-            LinkedList <Creature> creature = new LinkedList();
-            LinkedList <Creature> creature2 = new LinkedList();
+            LinkedList <DecoratedCreature> creature = new LinkedList();
+            LinkedList <DecoratedCreature> creature2 = new LinkedList();
             creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
             creature2.addAll(CardGame.instance.getCurrentAdversary().getCreatures()); 
             int idx,i=1;
@@ -75,9 +77,8 @@ public class AggressiveUrge implements Card{
         }      
         @Override
         public void resolve(){  
-            target.getDecorator().addFirst(new CreatureDecorator(target));//aggiungo il decoratore di default in testa alla lista di decoratori
-            target.getDecorator().addLast(new AggressiveUrgeDecorator(target));//aggiungo il decoratore di AggressiveUrge in fondo alla lista di decoratori
-            target = target.getDecorator().peekLast();//aggiungo l'ultimo decoratore inserito al target
+            
+          target.addDecorator(d);
             System.out.println("creatura:"+target.name()+":"+target.getPower()+"/"+target.getToughness());
         }
     }
@@ -96,8 +97,8 @@ public class AggressiveUrge implements Card{
          private final TriggerAction removeaction = new TriggerAction() {
                 @Override
                 public void execute(Object args) {
-                    target.getDecorator().removeLast();//rimuovo l'ultimo decoratore dalla lista
-                    target = target.getDecorator().getLast();//rimetto il decoratore precedente a quello che ho tolto
+                 //   target.getDecorator().removeLast();//rimuovo l'ultimo decoratore dalla lista
+                //    target = target.getDecorator().getLast();//rimetto il decoratore precedente a quello che ho tolto
                 }
             };      
         @Override
@@ -112,14 +113,12 @@ public class AggressiveUrge implements Card{
         }
     }
     
-    private class AggressiveUrgeDecorator extends CreatureDecorator{
-        public AggressiveUrgeDecorator(Creature decorate){
-            super(decorate);
-        }
+    private class AggressiveUrgeDecorator extends AbstractCreatureDecorator{
+        
         @Override
-        public int getPower() {return decorate.getPower()+1;}
+        public int getPower() {return c.getPower()+1;}
         @Override
-        public int getToughness() {return decorate.getToughness()+1;}
+        public int getToughness() {return c.getToughness()+1;}
     }
        
     @Override

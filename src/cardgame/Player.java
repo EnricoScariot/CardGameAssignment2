@@ -75,7 +75,7 @@ public class Player {
         System.out.println("=== Field ===");
         for (int i=0; i!=2; ++i) {
             Player fieldsPlayer=CardGame.instance.getPlayer(i);
-            List<Creature> creatures = fieldsPlayer.getCreatures();
+            List<DecoratedCreature> creatures = fieldsPlayer.getCreatures();
             if (creatures.isEmpty()) {
                 System.out.println(fieldsPlayer.name() + " has no creature in play");
             } else {
@@ -145,8 +145,8 @@ public class Player {
     }
      
     // Creature management
-    private final ArrayList<Creature> creatures = new ArrayList<>();
-    public List<Creature> getCreatures() {return creatures;}
+    private final ArrayList<DecoratedCreature> creatures = new ArrayList<>();
+    public List<DecoratedCreature> getCreatures() {return creatures;}
     // destroy a creature in play
     public void destroy(Creature c) {creatures.remove(c);}    
     

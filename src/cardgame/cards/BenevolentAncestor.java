@@ -17,6 +17,7 @@ import cardgame.CardFactory.StaticInitializer;
 import cardgame.CardGame;
 import cardgame.Creature;
 import cardgame.CreatureDecorator;
+import cardgame.DecoratedCreature;
 import cardgame.Effect;
 import cardgame.ICardFactory;
 import cardgame.Player;
@@ -31,7 +32,7 @@ import java.util.Scanner;
  * @author skari
  */
 public class BenevolentAncestor implements Card {
-    Creature target;
+    DecoratedCreature target;
     private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new BenevolentAncestor(); }

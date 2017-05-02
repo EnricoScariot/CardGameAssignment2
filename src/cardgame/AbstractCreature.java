@@ -18,7 +18,7 @@ public abstract class AbstractCreature implements Creature {
     protected Player owner;
     protected boolean isTapped=false;
     protected int damageLeft = getToughness();
-    LinkedList<CreatureDecorator> decorate = new LinkedList();//lista di decoratori propria di ogni creatura
+   
     
     ArrayList<Creature> difensori=new ArrayList<>(); // array delle creature che difendono l'attacco di this
    
@@ -28,8 +28,7 @@ public abstract class AbstractCreature implements Creature {
             decorator = this;
         }
         
-    @Override
-    public LinkedList<CreatureDecorator> getDecorator(){return decorate;}
+   
         
     @Override
         public boolean tap() { 
@@ -100,10 +99,7 @@ public abstract class AbstractCreature implements Creature {
        public ArrayList<Creature> defenders(){
            return difensori;
        }  
-       @Override
-       public void setDecorator(CreatureDecorator cd){
-           decorator = cd;
-       }
+      
      
         
 }
