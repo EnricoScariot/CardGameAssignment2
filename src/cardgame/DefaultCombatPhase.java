@@ -29,7 +29,7 @@ public class DefaultCombatPhase implements Phase {
         
         ArrayList<Creature> could_be_attackers=new ArrayList<>(); //creature che potrebbero attaccare
         ArrayList<Creature> attackers=new ArrayList<>(); // creature che attaccano
-        int[] attackers_boolean=new int[could_be_attackers.size()];
+        
         
         ArrayList<Creature> could_be_defenders= new ArrayList<>();
         
@@ -54,8 +54,8 @@ public class DefaultCombatPhase implements Phase {
                 }
             }
             
-           i=0;
-            
+         i=0;
+         int[] attackers_boolean=new int[could_be_attackers.size()];
             while(i<attackers_boolean.length){
                 System.out.println("vuoi che la creatura " + could_be_attackers.get(i).name() + " sia uno degli attaccanti (0/1)");
                 int num;
@@ -63,7 +63,7 @@ public class DefaultCombatPhase implements Phase {
                     Scanner in = new Scanner(System.in);
                     num = in.nextInt();
                     
-                } while(num!=0 || num!=1);
+                } while(num!=0 && num!=1);
                 
                  attackers_boolean[i]=num; 
                  if(attackers_boolean[i]==1){
@@ -117,7 +117,7 @@ public class DefaultCombatPhase implements Phase {
             }
             
             while(i<could_be_defenders.size()){
-                System.out.println("vuoi che la creatura " + could_be_defenders.get(i).name().toString() + " difenda una delle creature attaccanti? (0/1)");
+                System.out.println("vuoi che la creatura " + could_be_defenders.get(i).name() + " difenda una delle creature attaccanti? (0/1)");
                 int num;
                 do{
                     Scanner in = new Scanner(System.in);
@@ -181,7 +181,7 @@ public class DefaultCombatPhase implements Phase {
             int totale_danni_difensore=0;
             
             for(Creature d: c.defenders()){
-                totale_danni_difensore+=d.getDamage();
+                totale_danni_difensore+=d.getPower();
             }
          
             
@@ -189,11 +189,11 @@ public class DefaultCombatPhase implements Phase {
             
             for( Creature d: c.defenders()){
                 if(totale_danni_attaccante>d.getToughness()){
-                    totale_danni_attaccante-=d.getDamage();
+                    totale_danni_attaccante-=d.getPower();
                     d.remove();
                 }
                 else
-                    totale_danni_attaccante-=d.getDamage();
+                    totale_danni_attaccante-=d.getPower();
                     
             }
                            
@@ -203,31 +203,16 @@ public class DefaultCombatPhase implements Phase {
         }
         
                
-        System.out.println( currentPlayer.name() + " ha "+currentPlayer.getLife() +"punti vita"); 
-               
-        System.out.println( currentPlayer.name()+ " ha "+adversary.getLife() +"punti vita"); 
-        
-    }
-    
-    
-    
-    
-    
-    }
-            
-            
-            
-          
-            
-      
-        
-        
-        
-        
-        
-        
-        
-        
        
+        
+    }
     
+    
+    
+     System.out.println( currentPlayer.name() + " ha "+currentPlayer.getLife() +"punti vita"); 
+               
+     System.out.println( currentPlayer.name()+ " ha "+adversary.getLife() +"punti vita"); 
+    
+    }
+            
 }
