@@ -5,6 +5,7 @@
  */
 package cardgame.cards;
 
+import cardgame.AbstractCreatureDecorator;
 import cardgame.AbstractEnchantment;
 import cardgame.AbstractEnchantmentCardEffect;
 import cardgame.Card;
@@ -12,18 +13,24 @@ import cardgame.CardGame;
 import cardgame.CardFactory;
 import cardgame.Creature;
 import cardgame.CreatureDecorator;
+import cardgame.DecoratedCreature;
 import cardgame.Effect;
 import cardgame.Enchantment;
 import cardgame.ICardFactory;
 import cardgame.Player;
 import cardgame.Triggers;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  *
  * @author Sara
  */
 public class AncestralMask implements Card{
+    
+    
+    DecoratedCreature target; 
+        AncestralMaskDecorator af = new AncestralMaskDecorator(); // decoratore globale così posso usare bene la remove
     private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new AncestralMask(); }
@@ -36,14 +43,7 @@ public class AncestralMask implements Card{
         public AncestralMaskEffect(Player p,Card c) { super(p,c); }
         @Override
         public void resolve(){
-            LinkedList <Creature> creature = new LinkedList();
-            creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
-            creature.addAll(CardGame.instance.getCurrentAdversary().getCreatures());
-            for(Creature c: creature){
-                c.getDecorator().addFirst(new CreatureDecorator(c));//aggiungo il decoratore di default in testa alla lista di decoratori
-                c.getDecorator().addLast(new AncestralMaskDecorator(c));
-                c = c.getDecorator().peekLast();
-            }
+            target.addDecorator(af);
         }           
         @Override
         protected Enchantment createEnchantment() { return new AncestralMaskEnchantment(owner); }   
@@ -59,23 +59,12 @@ public class AncestralMask implements Card{
     public String name() { return "Ancestral Mask"; } 
     @Override
      public void remove() {          
-            LinkedList <Creature> creature = new LinkedList();
-            creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
-            creature.addAll(CardGame.instance.getCurrentAdversary().getCreatures());
-            for(Creature c: creature){
-                AncestralMaskDecorator a = new AncestralMaskDecorator(c);
-                c.getDecorator().remove(a);/*tolgo il decoratore specifico dalla lista*/
-                c = c.getDecorator().peekLast();/*tolgo i decoratori dalla carta*/
-                }
-            owner.getEnchantments().remove(this);           
-            CardGame.instance.getTriggers().trigger(Triggers.EXIT_ENCHANTMENT_FILTER,this);
+           target.removeDecorator(af);
         }
     }
     
-    private class AncestralMaskDecorator extends CreatureDecorator{
-        public AncestralMaskDecorator(Creature decorate){
-            super(decorate);
-        }
+    private class AncestralMaskDecorator extends AbstractCreatureDecorator{
+        
         public int numeroIncantesimi(){
             LinkedList <Enchantment> enchantment = new LinkedList();
             enchantment.addAll(CardGame.instance.getCurrentPlayer().getEnchantments());
@@ -84,10 +73,40 @@ public class AncestralMask implements Card{
             return size-1;
         }
         @Override
-        public int getPower() {return decorate.getPower()+(2*numeroIncantesimi());}
+        public int getPower() {return c.getPower()+(2*numeroIncantesimi());}
         @Override
-        public int getToughness() {return decorate.getToughness()+(2*numeroIncantesimi());}
+        public int getToughness() {return c.getToughness()+(2*numeroIncantesimi());}
     }
+    
+     public void pickTarget(){
+            Scanner reader =  new Scanner(System.in);
+            LinkedList <DecoratedCreature> creature = new LinkedList();
+            LinkedList <DecoratedCreature> creature2 = new LinkedList();
+            creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
+            creature2.addAll(CardGame.instance.getCurrentAdversary().getCreatures()); 
+            int idx,i=1;
+            System.out.println("vuoi scegliere come target una tua creatura o una avversaria?0/1");
+            idx = reader.nextInt();
+            if(idx == 0){
+                System.out.println("Scegli la creatura target:");
+                System.out.println("Ceature del giocatore:"+ CardGame.instance.getCurrentPlayer().name());
+                for (Creature c : creature) {
+                    System.out.println(i +")"+c.name());
+                    i++;
+                }
+            idx = reader.nextInt()-1;
+            target = creature.get(idx);
+            }else if (idx == 1){
+                System.out.println("Scegli la creatura target:");
+                System.out.println("Ceature del giocatore:"+ CardGame.instance.getCurrentAdversary().name());
+                for (Creature c : creature2) {
+                    System.out.println(i +")"+c.name());
+                    i++;
+             }
+            idx = reader.nextInt()-1;  
+            target = creature2.get(idx);
+            }                 
+        }     
     
     @Override
     public String name() { return "Ancestral Mask";}

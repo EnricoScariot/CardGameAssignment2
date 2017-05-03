@@ -5,6 +5,7 @@
  */
 package cardgame.cards;
 
+import cardgame.AbstractCreatureDecorator;
 import cardgame.AbstractEnchantment;
 import cardgame.AbstractEnchantmentCardEffect;
 import cardgame.Card;
@@ -12,18 +13,25 @@ import cardgame.CardFactory;
 import cardgame.CardGame;
 import cardgame.Creature;
 import cardgame.CreatureDecorator;
+import cardgame.DecoratedCreature;
 import cardgame.Effect;
 import cardgame.Enchantment;
 import cardgame.ICardFactory;
 import cardgame.Player;
 import cardgame.Triggers;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  *
  * @author Sara
  */
 public class Abduction implements Card{
+    
+    DecoratedCreature target; 
+    AbductionDecorator af= new AbductionDecorator();
+    
+    
     private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new Abduction(); }
@@ -36,14 +44,9 @@ public class Abduction implements Card{
         public AbductionEffect(Player p,Card c) { super(p,c); }
         
         public void resolve(){
-            LinkedList <Creature> creature = new LinkedList();
-            creature.addAll(CardGame.instance.getCurrentAdversary().getCreatures());
-            for(Creature c: creature){
-                c.getDecorator().addFirst(new CreatureDecorator(c));//aggiungo il decoratore di default in testa alla lista di decoratori
-                c.getDecorator().addLast(new AbductionDecorator(c));
-                c = c.getDecorator().peekLast();
-                c.untap();/*stappo tutte le creature*/
-            }           
+           pickTarget();
+           target.untap(); // quando l'incanta creatura entra in gioco, stappa la creatura bersaglio
+           target.addDecorator(af);
         }           
         @Override
         protected Enchantment createEnchantment() { return new AbductionEnchantment(owner); }   
@@ -60,27 +63,46 @@ public class Abduction implements Card{
     @Override
     
      public void remove() {          
-            LinkedList <Creature> creature = new LinkedList();
-            creature.addAll(CardGame.instance.getCurrentAdversary().getCreatures());
-            for(Creature c: creature){
-                AbductionDecorator a = new AbductionDecorator(c);
-                c.getDecorator().remove(a);/*tolgo il decoratore specifico dalla lista*/
-                c = c.getDecorator().peekLast();/*tolgo i decoratori dalla carta*/
-                }
-            owner.getEnchantments().remove(this);           
-            CardGame.instance.getTriggers().trigger(Triggers.EXIT_ENCHANTMENT_FILTER,this);
+           target.removeDecorator(af);
         }
     }
     
-    private class AbductionDecorator extends CreatureDecorator{
-        public AbductionDecorator(Creature decorate){
-            super(decorate);
-        }
+    private class AbductionDecorator extends AbstractCreatureDecorator{
+       
         @Override
         public Player getOwner(){
+            
             return CardGame.instance.getCurrentPlayer();
         }
+        
+        
     }   
+    
+      public void pickTarget(){
+            Scanner reader =  new Scanner(System.in);
+            int idx,i=1;
+            System.out.println("vuoi scegliere come target una tua creatura o una avversaria?0/1");
+            idx = reader.nextInt();
+            if(idx == 0){
+                System.out.println("Scegli la creatura target:");
+                System.out.println("Ceature del giocatore:"+ CardGame.instance.getCurrentPlayer().name());
+                for (Creature c : CardGame.instance.getCurrentPlayer().getCreatures()) {
+                    System.out.println(i +")"+c.name());
+                    i++;
+                }
+            idx = reader.nextInt()-1;
+            target = CardGame.instance.getCurrentPlayer().getCreatures().get(idx);
+            }else if (idx == 1){
+                System.out.println("Scegli la creatura target:");
+                System.out.println("Ceature del giocatore:"+ CardGame.instance.getCurrentAdversary().name());
+                for (Creature c : CardGame.instance.getCurrentAdversary().getCreatures()) {
+                    System.out.println(i +")"+c.name());
+                    i++;
+             }
+            idx = reader.nextInt()-1;  
+            target = CardGame.instance.getCurrentAdversary().getCreatures().get(idx);
+            }                 
+        }      
     @Override
     public String name() { return "Abduction";}
     @Override

@@ -11,6 +11,7 @@
 package cardgame.cards;
 import cardgame.AbstractCreature;
 import cardgame.AbstractCreatureCardEffect;
+import cardgame.AbstractCreatureDecorator;
 import cardgame.Card;
 import cardgame.CardFactory;
 import cardgame.CardFactory.StaticInitializer;
@@ -33,6 +34,11 @@ import java.util.Scanner;
  */
 public class BenevolentAncestor implements Card {
     DecoratedCreature target;
+    Player targetPlayer;
+    BenevolentAncestorDecorator af = new BenevolentAncestorDecorator(); // decoratore globale così posso usare bene la remove
+    int selectedCreature=1; // valore booleano che diventa false nel caso in cui si decida di scegliere come target un giocatore
+    
+   
     private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new BenevolentAncestor(); }
@@ -46,44 +52,33 @@ public class BenevolentAncestor implements Card {
         @Override
         protected Creature createCreature() { return new BenevolentAncestorCreature(owner); }
         
-        public void getTarget(){
-            Scanner reader =  new Scanner(System.in);
-            LinkedList <Creature> creature = new LinkedList();
-            LinkedList <Creature> creature2 = new LinkedList();
-            creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
-            creature2.addAll(CardGame.instance.getCurrentAdversary().getCreatures()); 
-            int idx,i=1;
-            System.out.println("vuoi scegliere come target una tua creatura o una avversaria?0/1");
-            idx = reader.nextInt();
-            if(idx == 0){
-                System.out.println("Scegli la creatura target:");
-                System.out.println("Ceature del giocatore:"+ CardGame.instance.getCurrentPlayer().name());
-                for (Creature c : creature) {
-                    System.out.println(i +")"+c.name());
-                    i++;
-                }
-            idx = reader.nextInt()-1;
-            target = creature.get(idx);
-            }else if (idx == 1){
-                System.out.println("Scegli la creatura target:");
-                System.out.println("Ceature del giocatore:"+ CardGame.instance.getCurrentAdversary().name());
-                for (Creature c : creature2) {
-                    System.out.println(i +")"+c.name());
-                    i++;
-             }
-            idx = reader.nextInt()-1;  
-            target = creature2.get(idx);
-            }                 
-        }      
+       
         public boolean play() {
-            getTarget();
+             int num;
+                do{
+                    System.out.println("vuoi selezionare come target una creatura (0) oppure un giocatore? (1)");
+                    Scanner in = new Scanner(System.in);
+                    num = in.nextInt();
+                    
+                } while(num!=0 && num!=1);
+            if(num==1){
+                pickPlayer(); // seleziono il giocatore bersaglio
+                selectedCreature=0; // metto a 0 il flag
+                
+            }
+            else{
+                pickTarget(); // seleziono la creatura bersaglio
+            }
+                     
             return super.play();
         }      
         @Override
         public void resolve(){  
-            target.getDecorator().addFirst(new CreatureDecorator(target));//aggiungo il decoratore di default in testa alla lista di decoratori
-            target.getDecorator().addLast(new BenevolentAncestor.BenevolentAncestorDecorator(target));//aggiungo il decoratore di Afflict in fondo alla lista di decoratori
-            target = target.getDecorator().peekLast();//aggiungo l'ultimo decoratore inserito al target
+            if(selectedCreature==1)
+                 target.addDecorator(af);
+            
+            else
+                targetPlayer.heal(1); // previeni un danno aumentando di 1 la sua vita
         } 
         
     }
@@ -117,14 +112,65 @@ public class BenevolentAncestor implements Card {
         public List<Effect> avaliableEffects() { return (isTapped)?tap_effects:all_effects; }
     }
     
-    private class BenevolentAncestorDecorator extends CreatureDecorator{
-        public BenevolentAncestorDecorator(Creature decorate){
-            super(decorate);
-        }
+    private class BenevolentAncestorDecorator extends AbstractCreatureDecorator{
+       
         @Override
-       public void inflictDamage(int dmg) { decorate.inflictDamage(dmg-1);} // effetto della carta, previene un danno
+       public void inflictDamage(int dmg) {
+           c.inflictDamage(dmg-1);
+       
+       } // effetto della carta, previene un danno
       
     }
+    
+    public void pickPlayer(){
+          int num;
+                do{
+                    System.out.println("vuoi selezionare come target te stesso o il giocatore avversario?");
+                    Scanner in = new Scanner(System.in);
+                    num = in.nextInt();
+                    
+                } while(num!=0 && num!=1);
+                
+              if(num==1){
+                targetPlayer=CardGame.instance.getCurrentPlayer();
+                
+            }
+            else{
+                targetPlayer=CardGame.instance.getCurrentAdversary();
+            }   
+         
+         
+    }
+    
+    public void pickTarget(){
+            Scanner reader =  new Scanner(System.in);
+            LinkedList <DecoratedCreature> creature = new LinkedList();
+            LinkedList <DecoratedCreature> creature2 = new LinkedList();
+            creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
+            creature2.addAll(CardGame.instance.getCurrentAdversary().getCreatures()); 
+            int idx,i=1;
+            System.out.println("vuoi scegliere come target una tua creatura o una avversaria?0/1");
+            idx = reader.nextInt();
+            if(idx == 0){
+                System.out.println("Scegli la creatura target:");
+                System.out.println("Ceature del giocatore:"+ CardGame.instance.getCurrentPlayer().name());
+                for (Creature c : creature) {
+                    System.out.println(i +")"+c.name());
+                    i++;
+                }
+            idx = reader.nextInt()-1;
+            target = creature.get(idx);
+            }else if (idx == 1){
+                System.out.println("Scegli la creatura target:");
+                System.out.println("Ceature del giocatore:"+ CardGame.instance.getCurrentAdversary().name());
+                for (Creature c : creature2) {
+                    System.out.println(i +")"+c.name());
+                    i++;
+             }
+            idx = reader.nextInt()-1;  
+            target = creature2.get(idx);
+            }                 
+        }  
     
     @Override
     public String name() { return "Benevolent Ancestor"; }

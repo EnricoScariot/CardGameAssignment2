@@ -30,7 +30,7 @@ import java.util.Scanner;
 public class AggressiveUrge implements Card{
         
         DecoratedCreature target; 
-    
+        AggressiveUrgeDecorator af = new AggressiveUrgeDecorator(); // decoratore globale così posso usare bene la remove
   private static class Factory implements ICardFactory {
         @Override
         public Card create() { return new AggressiveUrge(); }
@@ -78,7 +78,7 @@ public class AggressiveUrge implements Card{
         @Override
         public void resolve(){  
             
-          target.addDecorator(d);
+          target.addDecorator(af);
             System.out.println("creatura:"+target.name()+":"+target.getPower()+"/"+target.getToughness());
         }
     }
@@ -97,8 +97,7 @@ public class AggressiveUrge implements Card{
          private final TriggerAction removeaction = new TriggerAction() {
                 @Override
                 public void execute(Object args) {
-                 //   target.getDecorator().removeLast();//rimuovo l'ultimo decoratore dalla lista
-                //    target = target.getDecorator().getLast();//rimetto il decoratore precedente a quello che ho tolto
+                        target.removeDecorator(af);
                 }
             };      
         @Override
