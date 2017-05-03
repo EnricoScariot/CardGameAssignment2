@@ -122,6 +122,9 @@ public class DecoratedCreature implements Creature {
         c.remove();
     }
 
-   
+    @Override
+   public String toString() {
+            return name() + " (Creature)";
+        }
     
 }
