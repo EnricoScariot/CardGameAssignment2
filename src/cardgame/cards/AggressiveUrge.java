@@ -12,7 +12,6 @@ import cardgame.Card;
 import cardgame.CardFactory;
 import cardgame.CardGame;
 import cardgame.Creature;
-import cardgame.CreatureDecorator;
 import cardgame.DecoratedCreature;
 import cardgame.Effect;
 import cardgame.ICardFactory;
@@ -71,13 +70,13 @@ public class AggressiveUrge implements Card{
             target = creature2.get(idx);
             }                 
         }      
+        @Override
         public boolean play() {
            pickTarget();
             return super.play();
         }      
         @Override
-        public void resolve(){  
-            
+        public void resolve(){             
           target.addDecorator(af);
             System.out.println("creatura:"+target.name()+":"+target.getPower()+"/"+target.getToughness());
         }

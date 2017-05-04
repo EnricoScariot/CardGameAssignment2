@@ -34,6 +34,7 @@ public class AetherFlash implements Card{
     private class AetherFlashEffect extends AbstractEnchantmentCardEffect {
         public AetherFlashEffect(Player p,Card c) { super(p,c); }
         
+        @Override
         public void resolve(){
             System.out.println("Whenever a creature comes into play,Aether Flash deals 2 damage to it");
         }            

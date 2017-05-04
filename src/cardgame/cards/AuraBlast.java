@@ -62,12 +62,14 @@ public class AuraBlast implements Card{
                 target = enchantment2.get(idx);
             }
         }
+        @Override
         public void resolve(){
             System.out.println(" removing " + target.name() + " from field");
             target.remove();
             System.out.println(" drawing a card");
             CardGame.instance.getCurrentAdversary().draw();           
         }
+        @Override
         public boolean play() {
             pickTarget();
             return super.play();

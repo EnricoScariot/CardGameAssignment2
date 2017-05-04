@@ -64,10 +64,10 @@ public abstract class AbstractCreature implements Creature {
             difensori.add(c);             
         } 
         @Override
-        public void inflictDamage(int dmg) { 
+        public void inflictDamage(int dmg) {
             damageLeft -= dmg; 
             if (damageLeft<=0)
-                owner.destroy(this);        
+                owner.destroy(this);      
         }
         
         

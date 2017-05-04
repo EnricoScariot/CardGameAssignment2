@@ -148,7 +148,7 @@ public class Player {
     private final ArrayList<DecoratedCreature> creatures = new ArrayList<>();
     public List<DecoratedCreature> getCreatures() {return creatures;}
     // destroy a creature in play
-    public void destroy(DecoratedCreature c) {creatures.remove(c);}    
+    public void destroy(Creature c) {creatures.remove(c);}    
     
     // Enchantments management
     private final ArrayList<Enchantment> enchantments = new ArrayList<>();

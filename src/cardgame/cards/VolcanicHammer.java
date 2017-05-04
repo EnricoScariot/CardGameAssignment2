@@ -12,6 +12,7 @@ import cardgame.CardFactory;
 import cardgame.CardFactory.StaticInitializer;
 import cardgame.CardGame;
 import cardgame.Creature;
+import cardgame.DecoratedCreature;
 import cardgame.Effect;
 import cardgame.ICardFactory;
 import cardgame.Player;
@@ -46,11 +47,11 @@ private static class Factory implements ICardFactory {
         @Override
         public void resolve(){ 
             if(idx == 1){
-                LinkedList <Creature> creature = new LinkedList();
+                LinkedList <DecoratedCreature> creature = new LinkedList();
                 creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
                 creature.addAll(CardGame.instance.getCurrentAdversary().getCreatures()); 
 
-                for (Creature c : creature) {
+                for (DecoratedCreature c : creature) {
                     c.inflictDamage(3);
                     System.out.println("danno pari a 3 inflitto a:"+c.name());
                 }

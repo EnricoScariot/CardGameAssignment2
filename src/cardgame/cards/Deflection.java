@@ -32,10 +32,6 @@ public class Deflection implements Card{
     private class DeflectionEffect extends AbstractCardEffect {
         public DeflectionEffect(Player p,Card c) { super(p,c); }
        
-        public boolean play() {
-            return super.play();
-        }
-       
         @Override
         public void resolve(){
         /*cambia il target a una magia*/

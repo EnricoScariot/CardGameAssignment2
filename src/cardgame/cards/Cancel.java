@@ -49,7 +49,7 @@ public class Cancel implements Card{
             idx = reader.nextInt()-1;          
             target = CardGame.instance.getStack().get(idx);    
         }
-       
+        @Override
         public boolean play() {
             pickTarget();
             return super.play();
