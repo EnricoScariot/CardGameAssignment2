@@ -22,8 +22,19 @@ import cardgame.cards.NorwoodRanger;
 import cardgame.cards.SavorTheMoment;
 import cardgame.cards.WorldAtWar;
 import cardgame.CardFactory;
+import cardgame.cards.Abduction;
+import cardgame.cards.AetherBarrier;
+import cardgame.cards.AetherFlash;
 import cardgame.cards.Afflict;
+import cardgame.cards.AggressiveUrge;
+import cardgame.cards.AncestralMask;
+import cardgame.cards.ArgothianEnchantress;
+import cardgame.cards.AuraBlast;
+import cardgame.cards.BenevolentAncestor;
+import cardgame.cards.CalmingVerse;
 import cardgame.cards.Cancel;
+import cardgame.cards.Deflection;
+import cardgame.cards.VolcanicHammer;
 
 /**
  *
@@ -34,31 +45,55 @@ public class CardGame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {     
+    public static void main(String[] args){     
         
         //create decks
         ArrayList<Card> deck = new ArrayList<>();
-        /*
+        
         CardFactory cf = new CardFactory();
         
-        for (ICardFactory f: CardFactory.getMapCards()) {
+       /* for (ICardFactory f: CardFactory.getMapCards()) {
             Card c = f.create();
             deck.add(c);               
         }*/
-    //    for (int i=0; i!=3; ++i) deck.add(new Homeopathy());
-    //    for (int i=0; i!=3; ++i) deck.add(new Reflexologist());
-    //    for (int i=0; i!=2; ++i) deck.add(new BoilingHeart());
-          for (int i=0; i!=3; ++i) deck.add(new NorwoodRanger());
-          for (int i=0; i!=3; ++i) deck.add(new BronzeSable());
-    //    for (int i=0; i!=2; ++i) deck.add(new FriendlyEnvironment());
-    //    for (int i=0; i!=2; ++i) deck.add(new DayOfJudgment());
-    //    for (int i=0; i!=2; ++i) deck.add(new SavorTheMoment());
-    //    for (int i=0; i!=2; ++i) deck.add(new Fatigue());
-    //    for (int i=0; i!=2; ++i) deck.add(new Cancel());
+
+  
           for (int i=0; i!=2; ++i) deck.add(new Afflict());
     //    for (int i=0; i!=2; ++i) deck.add(new FalsePeace());
     //    for (int i=0; i!=2; ++i) deck.add(new WorldAtWar());
-        
+    //    for (int i=0; i!=2; ++i) deck.add(new Abduction());
+    //    for (int i=0; i!=2; ++i) deck.add(new AetherBarrier());
+    //    for (int i=0; i!=2; ++i) deck.add(new AetherFlash());
+    //    for (int i=0; i!=2; ++i) deck.add(new AggressiveUrge());
+    //    for (int i=0; i!=2; ++i) deck.add(new AncestralMask());
+   //     for (int i=0; i!=2; ++i) deck.add(new ArgothianEnchantress());
+    //    for (int i=0; i!=2; ++i) deck.add(new AuraBlast());
+    //    for (int i=0; i!=2; ++i) deck.add(new BenevolentAncestor());
+    //    for (int i=0; i!=2; ++i) deck.add(new ArgothianEnchantress());
+    //    for (int i=0; i!=2; ++i) deck.add(new BoilingHeart()); 
+          for (int i=0; i!=3; ++i) deck.add(new BronzeSable());
+    //    for (int i=0; i!=3; ++i) deck.add(new CalmingVerse());
+    //    for (int i=0; i!=2; ++i) deck.add(new Cancel());
+    //    for (int i=0; i!=2; ++i) deck.add(new Darkness());
+    //    for (int i=0; i!=2; ++i) deck.add(new DayOfJudgment());
+    //    for (int i=0; i!=2; ++i) deck.add(new Deflection());
+    //    for (int i=0; i!=2; ++i) deck.add(new Fatigue());
+    //    for (int i=0; i!=2; ++i) deck.add(new FriendlyEnvironment());
+    //    for (int i=0; i!=2; ++i) deck.add(new Homeopathy());   
+          for (int i=0; i!=3; ++i) deck.add(new NorwoodRanger());
+    //    for (int i=0; i!=3; ++i) deck.add(new Reflexologist());      
+    //    for (int i=0; i!=2; ++i) deck.add(new SavorTheMoment()); 
+    //    for (int i=0; i!=2; ++i) deck.add(new VolcanicHammer()); 
+    //    for (int i=0; i!=2; ++i) deck.add(new WorldAtWar()); 
+
+          
+          
+   
+    
+    
+          
+          
+          
         instance.getPlayer(0).setDeck(deck.iterator());
         instance.getPlayer(1).setDeck(deck.iterator());
        

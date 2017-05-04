@@ -55,9 +55,7 @@ public class Deflection implements Card{
         /*non so come fare*/
        
        } 
-
-   
-       
+      
     @Override
     public String name() {return "Deflection";}
     @Override

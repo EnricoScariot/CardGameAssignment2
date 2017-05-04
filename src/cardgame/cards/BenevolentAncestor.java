@@ -75,8 +75,7 @@ public class BenevolentAncestor implements Card {
         @Override
         public void resolve(){  
             if(selectedCreature==1)
-                 target.addDecorator(af);
-            
+                 target.addDecorator(af);           
             else
                 targetPlayer.heal(1); // previeni un danno aumentando di 1 la sua vita
         } 
