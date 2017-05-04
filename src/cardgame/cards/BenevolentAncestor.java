@@ -96,11 +96,6 @@ public class BenevolentAncestor implements Card {
         
         @Override
         public String name() { return "BenevolentAncestor"; }
-        
-        @Override
-        public void attack() {}
-        @Override
-        public void defend(Creature c) {}
         @Override
         public int getPower() { return 0; }
         @Override

@@ -20,7 +20,7 @@ public interface Creature extends Permanent{
     boolean untap();
     boolean isTapped();
     void attack();
-    void defend(Creature c);
+    void defend(DecoratedCreature c);
     void inflictDamage(int dmg);
     void resetDamage();
     int getPower();
@@ -36,7 +36,7 @@ public interface Creature extends Permanent{
     // depending on state, e.g., tapped/untapped
     List<Effect> avaliableEffects();
     
-     ArrayList<Creature> defenders(); // restituisce l'array delle creature che vogliono parare l'attacco della mia creatura
+     ArrayList<DecoratedCreature> defenders(); // restituisce l'array delle creature che vogliono parare l'attacco della mia creatura
 
    
 }

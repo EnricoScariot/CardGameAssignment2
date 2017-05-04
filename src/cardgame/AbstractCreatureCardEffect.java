@@ -20,8 +20,9 @@ public abstract class AbstractCreatureCardEffect extends AbstractCardEffect {
     
     @Override
     public void resolve() { 
-        Creature c = createCreature();   // qua devo creare il decoratore iniziale e passarlo alla getCreatures    
-        DecoratedCreature dc=new DecoratedCreature(c);
+        Creature c = createCreature();   // qua devo creare il decoratore iniziale e passarlo alla getCreatures 
+        Player p = c.getOwner();//non sono molto sicura di ciò
+        DecoratedCreature dc = new DecoratedCreature(p,c);
         
         owner.getCreatures().add(dc);//inserisce la creatura nell'elenco delle creature nel campo
         dc.insert();

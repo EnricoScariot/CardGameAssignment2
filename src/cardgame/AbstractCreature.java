@@ -13,23 +13,18 @@ import java.util.LinkedList;
  * @author atorsell
  */
 public abstract class AbstractCreature implements Creature {
-    
-    private Creature decorator; 
+   
     protected Player owner;
     protected boolean isTapped=false;
     protected int damageLeft = getToughness();
-   
     
-    ArrayList<Creature> difensori=new ArrayList<>(); // array delle creature che difendono l'attacco di this
+    ArrayList<DecoratedCreature> difensori=new ArrayList<>(); // array delle creature che difendono l'attacco di this
    
         
-        protected AbstractCreature(Player owner) { 
+    public AbstractCreature(Player owner) { 
             this.owner=owner;
-            decorator = this;
         }
-        
-   
-        
+     
     @Override
         public boolean tap() { 
             if (isTapped) {
@@ -59,17 +54,16 @@ public abstract class AbstractCreature implements Creature {
     @Override
         public boolean isTapped() { return isTapped; }
         
-    /*usare owner per attaccare o difendere, questo indica che il giocatore li controlla?*/
+   
       @Override
         public void attack() {
             isTapped=true;
-        } // to do in assignment 2
+        } 
     @Override
-        public void defend(Creature c) { // questa creatura e' difesa dalla creatura c
-            difensori.add(c);
-              
-        } // to do in assignment 2
-        
+        public void defend(DecoratedCreature c) { // questa creatura e' difesa dalla creatura c
+            difensori.add(c);             
+        } 
+        @Override
         public void inflictDamage(int dmg) { 
             damageLeft -= dmg; 
             if (damageLeft<=0)
@@ -84,10 +78,7 @@ public abstract class AbstractCreature implements Creature {
             CardGame.instance.getTriggers().trigger(Triggers.ENTER_CREATURE_FILTER,this);
         }  
     @Override
-        public void remove() {
-            owner.getCreatures().remove(this);
-            CardGame.instance.getTriggers().trigger(Triggers.EXIT_CREATURE_FILTER,this);
-        }  
+        public void remove() {/*le creature non dovrebbero mai chiamarlo*/}  
     @Override
         public String toString() {
             return name() + " (Creature)";
@@ -95,8 +86,9 @@ public abstract class AbstractCreature implements Creature {
     @Override
         public Player getOwner(){
             return owner;
-        }      
-       public ArrayList<Creature> defenders(){
+        }   
+    @Override
+       public ArrayList<DecoratedCreature> defenders(){
            return difensori;
        }  
       

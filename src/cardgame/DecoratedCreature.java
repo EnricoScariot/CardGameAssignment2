@@ -15,26 +15,21 @@ import java.util.List;
 public class DecoratedCreature implements Creature {
 
     private Creature c;
+    private Player owner;
 
-    public DecoratedCreature(Creature c) {
+    public DecoratedCreature(Player p,Creature c) {
         this.c = c;
+        owner = p;
     }
-    
-    
-    
      public void addDecorator(CreatureDecorator d){
         c=d.decorate(c);
         
     }
-    
-    
-    
     public void removeDecorator(CreatureDecorator d){
        if (c instanceof CreatureDecorator) {
            CreatureDecorator cd = (CreatureDecorator) c;
            c = cd.remove(d);
-       }
-        
+       }    
     }
     
     @Override
@@ -58,7 +53,7 @@ public class DecoratedCreature implements Creature {
     }
 
     @Override
-    public void defend(Creature d) {
+    public void defend(DecoratedCreature d) {
        c.defend(d);
     }
 
@@ -103,7 +98,7 @@ public class DecoratedCreature implements Creature {
     }
 
     @Override
-    public ArrayList<Creature> defenders() {
+    public ArrayList<DecoratedCreature> defenders() {
        return c.defenders();
     }
 
@@ -119,7 +114,9 @@ public class DecoratedCreature implements Creature {
 
     @Override
     public void remove() {
-        c.remove();
+        owner.getCreatures().remove(this); 
+        System.out.println("removing " + name() + " from field");
+        CardGame.instance.getTriggers().trigger(Triggers.EXIT_CREATURE_FILTER);      
     }
 
     @Override

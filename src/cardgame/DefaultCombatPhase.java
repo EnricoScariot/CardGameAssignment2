@@ -14,41 +14,48 @@ import java.util.Scanner;
  */
 public class DefaultCombatPhase implements Phase {
     
-    Creature attacker;
-    ArrayList<Creature> defenders=new ArrayList<>();
-    
+    ArrayList<DecoratedCreature> defenders=new ArrayList<>();
+    Player currentPlayer;
+    Player adversary;
+    Player activePlayer;
+    CardStack stack; 
+    ArrayList<DecoratedCreature> could_be_attackers=new ArrayList<>(); //creature che potrebbero attaccare
+    ArrayList<DecoratedCreature> attackers=new ArrayList<>(); // creature che attaccano     
+    ArrayList<DecoratedCreature> could_be_defenders= new ArrayList<>();
     
     
     @Override
     public void execute() {
+        currentPlayer = CardGame.instance.getCurrentPlayer();
+        adversary = CardGame.instance.getCurrentAdversary();
+        stack= CardGame.instance.getStack(); // stack da riempire e svuotare  
                
-        Player currentPlayer = CardGame.instance.getCurrentPlayer();
-        Player adversary = CardGame.instance.getCurrentAdversary();
-        Player activePlayer;
-        CardStack stack= CardGame.instance.getStack(); // stack da riempire e svuotare
-        
-        ArrayList<Creature> could_be_attackers=new ArrayList<>(); //creature che potrebbero attaccare
-        ArrayList<Creature> attackers=new ArrayList<>(); // creature che attaccano
-        
-        
-        ArrayList<Creature> could_be_defenders= new ArrayList<>();
-        
-        
-        
-        
-        
         System.out.println(currentPlayer.name() + ": combat phase");
         CardGame.instance.getTriggers().trigger(Triggers.COMBAT_FILTER);
-        // TODO combat
 
+        dicAttaccanti(); 
+        stackResolve(adversary,currentPlayer);
+        dicDifensori();
+        stackResolve(currentPlayer,adversary);
+        distDanno();
+    
+    
+    System.out.println( currentPlayer.name() + " ha "+currentPlayer.getLife() +"punti vita");            
+    System.out.println( adversary.name()+ " ha "+adversary.getLife() +"punti vita"); 
+    
+    }
+ 
+    void dicAttaccanti(){
         //Dichiarazione Creature Attaccanti
-        
+         if(currentPlayer.getCreatures().isEmpty()) 
+              System.out.println("Il Giocatore " + currentPlayer.name() + " non ha attaccanti"); 
+        else{ 
           System.out.println("Il Giocatore " + currentPlayer.name() + " sceglie gli attaccanti");
             
             int i=1;
-            for (Creature c:currentPlayer.getCreatures()) {
+            for (DecoratedCreature c:currentPlayer.getCreatures()) {
                 if (!c.isTapped()) {
-                    System.out.println(i + ") " + c);
+                    System.out.println(i + ") " + c.name());
                     could_be_attackers.add(c);
                     ++i;
                 }
@@ -67,152 +74,97 @@ public class DefaultCombatPhase implements Phase {
                 
                  attackers_boolean[i]=num; 
                  if(attackers_boolean[i]==1){
-                     attackers.add(could_be_attackers.get(i));
-                    
-                     
+                     attackers.add(could_be_attackers.get(i));                  
                  }
                i++;      
-            }
-            
-            for (Creature c: attackers){
-                c.attack();
-                
-            }
-            
-            // inizia il botta e risposta tra current player ed adversary con effetti ecc che vengono inseriti nello stack
-         
-        System.out.println( adversary.name().toString() + " puoi rispondere mettendo un effetto nello stack"); 
-        int numberPasses=0;
-        int id=0;
-        if (!Functions.playAvailableEffect(currentPlayer, true))
-            ++numberPasses;
+            }          
+        }   
+    }
+    void dicDifensori(){
         
-        while (numberPasses<2) {
-            if(id==0)
-                    activePlayer=adversary;
-                else
-                    activePlayer=currentPlayer;
-            if (Functions.playAvailableEffect(activePlayer,false))
-                numberPasses=0;
-            else ++numberPasses;
-            
-            id=(id+1)%2;
-        }
-        
-        CardGame.instance.getStack().resolve();
-        
-              
-        //Dichiarazione Creature difendenti
-       // array di potenziali difensori-> per ogni attaccante decido se e con cosa contrattaccare prendendo le robe dall'array di potenziali difensori
-        
-        System.out.println("Il Giocatore " + currentPlayer.name() + " sceglie i difensori");
-            
-            i=0;
-            for (Creature c:adversary.getCreatures()) {
+        if(adversary.getCreatures().isEmpty())
+              System.out.println("Il Giocatore " + adversary.name() + " non ha difensori");
+        else if(attackers.isEmpty())
+            System.out.println("Non ci sono attaccanti da cui difendersi");
+        else{
+        System.out.println("Il Giocatore " + adversary.name() + " sceglie i difensori");         
+            int i=0;
+            for (DecoratedCreature c:adversary.getCreatures()) {
                 if (!c.isTapped()) {
-                    System.out.println(i + ") " + c);
+                    System.out.println(i + ") " + c.name());
                     could_be_defenders.add(c);
-                    ++i;
+                    i++;
                 }
             }
-            
-            while(i<could_be_defenders.size()){
+            i = 0;       
+            while(i < could_be_defenders.size()){
                 System.out.println("vuoi che la creatura " + could_be_defenders.get(i).name() + " difenda una delle creature attaccanti? (0/1)");
                 int num;
                 do{
                     Scanner in = new Scanner(System.in);
                     num = in.nextInt();
                     
-                } while(num!=0 || num!=1);
+                } while(num!=0 && num!=1);
                 
                 if(num==1){
-                    System.out.println("da quale attaccante vuoi difenderti? schegli un numero tra 0 e" + attackers.size() + "-1");
-                     do{
+                    int j = 0;
+                     do{                 
+                    System.out.println("da quale attaccante vuoi difenderti? schegli un numero tra 0 e" + attackers.size() + "-1");   
+                    for(Creature c:attackers){
+                        System.out.println(j+")"+c.name());
+                        j++;
+                    }
                     Scanner in = new Scanner(System.in);
                     num = in.nextInt();
                     
-                    } while(num<0 && num>=attackers.size());
-                   
+                    } while(num<0 && num>=attackers.size());                   
                      attackers.get(num).defend(could_be_defenders.get(i));// ho aggiunto al mio array di difensori la creatura
-               }
-                
+               }               
               i++;  
              }
-            
-            
-            
-       
-       
-            // botta e risposta tra i 2 giocatori mettendo magie nello stack
-            
-              
-        System.out.println( currentPlayer.name().toString() + " puoi rispondere mettendo un effetto nello stack"); 
-        numberPasses=0;
-        id=1;
-        if (!Functions.playAvailableEffect(currentPlayer, true))
+        }
+    }
+    void distDanno(){
+            //Distribuzione del Danno
+        for(DecoratedCreature c: attackers){
+            c.attack(); 
+            for(DecoratedCreature d: c.defenders())
+                System.out.println(d.name());
+
+            if(c.defenders().isEmpty()){ // nessun difensore sta bloccando questa creatura quindi il danno va all'avversario
+                System.out.println("Danno diretto!");
+                adversary.inflictDamage(c.getPower());   
+            }
+
+            else{ // il danno viene distribuito tra le creature che difenono
+                int totale_danni_attaccante = c.getPower();
+
+                for(DecoratedCreature d: c.defenders()){
+                /*se il difensore ha più attacco dell'attacco dell'attaccante elimino l'attaccante*/ 
+                    if(d.getPower() >= c.getToughness()){
+                        c.remove();
+                    }
+                    /*controllo prima perchè se la creatura muore non posso più trovare la sua resistenza*/
+                    int difesa = d.getToughness();
+                    d.inflictDamage(totale_danni_attaccante); 
+                    totale_danni_attaccante -= difesa;                             
+                    }                      
+                }
+        }   
+    }
+    void stackResolve(Player avversario,Player giocatore){
+        System.out.println( avversario.name() + " puoi rispondere mettendo un effetto nello stack"); 
+        int numberPasses=0;
+        if (!Functions.playAvailableEffect(avversario, false))
             ++numberPasses;
         
         while (numberPasses<2) {
-            if(id==0)
-                    activePlayer=adversary;
-                else
-                    activePlayer=currentPlayer;
-            if (Functions.playAvailableEffect(activePlayer,false))
+            if (Functions.playAvailableEffect(giocatore,false))
                 numberPasses=0;
             else ++numberPasses;
-            
-            id=(id+1)%2;
         }
         
         CardGame.instance.getStack().resolve();
-            
-        
-        //Distribuzione del Danno
-  
-    for( Creature c: attackers){
-        
-        if(c.defenders().size()==0){ // nessun difensore sta bloccando questa creatura quindi il danno va all'avversario
-            int playerlife=adversary.getLife()-c.getPower();
-            adversary.setLife(playerlife);
-        }
-        
-        else{ // il danno viene distribuito tra le creature che difenono
-            int totale_danni_attaccante=c.getPower();
-            int totale_danni_difensore=0;
-            
-            for(Creature d: c.defenders()){
-                totale_danni_difensore+=d.getPower();
-            }
-         
-            
-            // devo vedere se muore anche qualche difensore
-            
-            for( Creature d: c.defenders()){
-                if(totale_danni_attaccante>d.getToughness()){
-                    totale_danni_attaccante-=d.getPower();
-                    d.remove();
-                }
-                else
-                    totale_danni_attaccante-=d.getPower();
-                    
-            }
-                           
-            if(totale_danni_difensore>=c.getToughness()) // se il danno è maggiore, rimuovi la creatura poichè muore
-                c.remove();
-            
-        }
-        
-               
-       
-        
-    }
-    
-    
-    
-     System.out.println( currentPlayer.name() + " ha "+currentPlayer.getLife() +"punti vita"); 
-               
-     System.out.println( currentPlayer.name()+ " ha "+adversary.getLife() +"punti vita"); 
     
     }
-            
 }

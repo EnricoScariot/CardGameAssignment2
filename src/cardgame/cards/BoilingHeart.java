@@ -13,6 +13,7 @@ import cardgame.Effect;
 import cardgame.Player;
 import cardgame.Witchcraft;
 import cardgame.CardGame;
+import cardgame.DecoratedCreature;
 import cardgame.ICardFactory;
 import java.util.LinkedList;
 /**
@@ -34,11 +35,11 @@ public class BoilingHeart implements Card {
         
         @Override
         public void resolve(){
-            LinkedList <Creature> creature = new LinkedList();
+            LinkedList <DecoratedCreature> creature = new LinkedList();
             creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
             creature.addAll(CardGame.instance.getCurrentAdversary().getCreatures()); 
             
-            for (Creature c : creature) {
+            for (DecoratedCreature c : creature) {
                 c.inflictDamage(1);
                 System.out.println("danno pari a 1 inflitto a:"+c.name());
             }

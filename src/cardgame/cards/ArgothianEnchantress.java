@@ -61,7 +61,7 @@ public class ArgothianEnchantress implements Card{
                                     }
                                     @Override
                                     public void resolve() {
-                                    Player owner = CardGame.instance.getCurrentPlayer();
+                                        System.out.println("Put in play a creature ArgothianEnchantress (0/1)");
                                     }
                                     @Override
                                     public String toString() 
@@ -93,11 +93,6 @@ public class ArgothianEnchantress implements Card{
         
         @Override
         public String name() { return "Argothian Enchantress"; }
-        
-        @Override
-        public void attack() {}
-        @Override
-        public void defend(Creature c) {}
         @Override
         public int getPower() { return 2; }
         @Override

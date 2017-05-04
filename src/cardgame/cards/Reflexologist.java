@@ -70,10 +70,6 @@ public class Reflexologist implements Card {
         public String name() { return "Reflexologist"; }
         
         @Override
-        public void attack() {}
-        @Override
-        public void defend(Creature c) {}
-        @Override
         public int getPower() { return 0; }
         @Override
         public int getToughness() { return 1; }

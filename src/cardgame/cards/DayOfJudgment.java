@@ -14,6 +14,7 @@ import cardgame.Creature;
 import cardgame.Effect;
 import cardgame.Player;
 import cardgame.CardGame;
+import cardgame.DecoratedCreature;
 import cardgame.ICardFactory;
 import cardgame.Witchcraft;
 import java.util.LinkedList;
@@ -37,10 +38,10 @@ public class DayOfJudgment implements Card{
         
         @Override
         public void resolve(){   
-            LinkedList <Creature> creature = new LinkedList();
+            LinkedList <DecoratedCreature> creature = new LinkedList();
             creature.addAll(CardGame.instance.getCurrentPlayer().getCreatures());
             creature.addAll(CardGame.instance.getCurrentAdversary().getCreatures());            
-            for (Creature c : creature) {
+            for (DecoratedCreature c : creature) {
                 c.remove();
                 System.out.println("creatura distrutta:"+c.name());
             }           

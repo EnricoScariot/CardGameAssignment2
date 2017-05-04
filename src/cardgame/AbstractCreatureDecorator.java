@@ -54,7 +54,7 @@ public abstract class AbstractCreatureDecorator implements CreatureDecorator {
     }
 
     @Override
-    public void defend(Creature d) {
+    public void defend(DecoratedCreature d) {
        c.defend(d);
     }
 
@@ -99,7 +99,7 @@ public abstract class AbstractCreatureDecorator implements CreatureDecorator {
     }
 
     @Override
-    public ArrayList<Creature> defenders() {
+    public ArrayList<DecoratedCreature> defenders() {
        return c.defenders();
     }
 

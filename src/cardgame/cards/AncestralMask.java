@@ -17,7 +17,9 @@ import cardgame.DecoratedCreature;
 import cardgame.Effect;
 import cardgame.Enchantment;
 import cardgame.ICardFactory;
+import cardgame.Permanent;
 import cardgame.Player;
+import cardgame.TriggerAction;
 import cardgame.Triggers;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -55,12 +57,25 @@ public class AncestralMask implements Card{
         public AncestralMaskEnchantment(Player owner) {
             super(owner);
         }
-    @Override
-    public String name() { return "Ancestral Mask"; } 
+   
     @Override
      public void remove() {          
            target.removeDecorator(af);
+           CardGame.instance.getTriggers().deregister(maxaction);
         }
+     private final TriggerAction maxaction = new TriggerAction() {
+                @Override
+                public void execute(Object args) {  
+                   target.addDecorator(af);
+                }
+            };      
+        @Override
+        public void insert() {
+            super.insert();
+            CardGame.instance.getTriggers().register(Triggers.ENTER_CREATURE_FILTER | Triggers.EXIT_CREATURE_FILTER, maxaction);
+        }        
+        @Override
+        public String name() { return "Ancestral Mask"; } 
     }
     
     private class AncestralMaskDecorator extends AbstractCreatureDecorator{

@@ -24,6 +24,7 @@ import cardgame.cards.WorldAtWar;
 import cardgame.CardFactory;
 import cardgame.cards.Afflict;
 import cardgame.cards.Cancel;
+
 /**
  *
  * @author atorsell
